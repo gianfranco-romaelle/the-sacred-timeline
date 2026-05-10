@@ -18,10 +18,6 @@ const TimelineWorkspace = lazy(async () => {
     },
   };
 });
-const HegelTriangleRoute = lazy(async () => {
-  const module = await import("@/features/hegel-triangle-transform");
-  return { default: module.HegelTriangleApp };
-});
 
 function SiteLoadingState({ title, detail }: { title: string; detail: string }) {
   return (
@@ -72,14 +68,6 @@ export default function AppRoot() {
     return (
       <Suspense fallback={<SiteLoadingState title="Loading timeline workspace" detail="Preparing the Sacred Timeline shell." />}>
         <TimelineWorkspace />
-      </Suspense>
-    );
-  }
-
-  if (path === "/fragment") {
-    return (
-      <Suspense fallback={<SiteLoadingState title="Loading fragment workspace" detail="Preparing the triangle-fragment simulation workspace." />}>
-        <HegelTriangleRoute />
       </Suspense>
     );
   }

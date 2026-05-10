@@ -5,8 +5,8 @@ import type { SacredTimelineSeedData } from "@/types";
 import { useExplorerStore } from "@/state/explorer-store";
 
 const RiverView = lazy(async () => {
-  const module = await import("@/features/lifelines/lifelines-view");
-  return { default: module.LifelinesView };
+  const module = await import("@/features/river/river-view");
+  return { default: module.RiverView };
 });
 
 const ConstellationView = lazy(async () => {
@@ -39,7 +39,7 @@ export function MainStage({ seed, index }: MainStageProps) {
   const shouldReduceMotion = useReducedMotion();
 
   const viewById = {
-    river: <RiverView />,
+    river: <RiverView seed={seed} index={index} />,
     constellation: <ConstellationView seed={seed} index={index} />,
     atlas: <AtlasView seed={seed} index={index} />,
     "face-atlas": <FaceAtlasView seed={seed} index={index} />,

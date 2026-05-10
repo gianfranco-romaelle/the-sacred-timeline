@@ -9,4 +9,3 @@ export * from "./provenance";
 export * from "./relations";
 export * from "./seed";
 export * from "./scriptorium";
-export * from "./hegel-triangle";

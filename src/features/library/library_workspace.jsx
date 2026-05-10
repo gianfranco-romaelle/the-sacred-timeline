@@ -66,7 +66,6 @@ import {
   syncDossiers,
   syncPharmaEvents,
 } from "./library_api";
-import { consumePendingInstitutePrompt, subscribeInstitutePrompt } from "@/features/hungry_topos/institute_bridge";
 
 const LazyLensSwitcher = lazy(async () => {
   const module = await import("./research_visualizations");
@@ -2161,19 +2160,6 @@ function LibraryWorkspaceInner({ session, onLogout, bootStatus }) {
     await runFormalResearch(prompt.query);
     setInstituteStatus("routed");
   }, [loadLawvereCollectionData, loadResearchData, loadSystemData, loadWebsiteToposData, runFormalResearch, runLibraryAsk]);
-
-  useEffect(() => {
-    const pendingPrompt = consumePendingInstitutePrompt();
-    if (pendingPrompt?.query) {
-      void applyInstitutePrompt(pendingPrompt);
-    }
-
-    return subscribeInstitutePrompt((nextPrompt) => {
-      if (nextPrompt?.query) {
-        void applyInstitutePrompt(nextPrompt);
-      }
-    });
-  }, [applyInstitutePrompt]);
 
   async function handleQuerySubmit(event) {
     event.preventDefault();
