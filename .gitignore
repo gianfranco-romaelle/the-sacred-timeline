@@ -42,6 +42,13 @@ __pycache__
 # Local backend/runtime data
 /backend/data
 /backend/.local_pdfdeps
+
+# Public runtime data files (large, generated — not for GitHub)
+/public/sacred_timeline_current.json
+/public/structural_graph_state.json
+/public/sacred_timeline_enriched.json
+/public/market_timeline_handoff.json
+/public/website_topos_export.json
 /backend/.tmp_*
 /backend/_vendor/
 /backend/_vendor_runtime/
@@ -76,3 +83,6 @@ __pycache__
 /backend/_vendor/paddle/include/build/
 *.egg-info/
 *.tsbuildinfo
+
+# Claude Code local settings
+.claude/settings.local.json
