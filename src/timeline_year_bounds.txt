@@ -1,0 +1,3 @@
+minYear=-700
+maxYear=2026
+paddingYears=50

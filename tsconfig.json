@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "useDefineForClassFields": true,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src", "scripts", "server", "vite.config.js"],
+  "exclude": [
+    "src/data/adapters/scriptorium-adapter.ts",
+    "src/data/adapters/__tests__/scriptorium-adapter.test.ts",
+    "src/data/scriptorium-manuscript.ts",
+    "src/App.jsx",
+    "src/features/library/**",
+    "src/features/scriptorium/**",
+    "src/main.jsx",
+    "src/workspace_app.jsx"
+  ],
+  "references": []
+}

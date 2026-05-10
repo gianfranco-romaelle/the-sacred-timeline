@@ -1,0 +1,11 @@
+{
+  "folders": [
+    {
+      "name": "sacred-timeline",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "git.ignoreLimitWarning": true
+  }
+}

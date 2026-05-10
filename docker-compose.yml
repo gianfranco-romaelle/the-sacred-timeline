@@ -1,0 +1,8 @@
+services:
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: semantic-library-qdrant
+    ports:
+      - "6333:6333"
+    volumes:
+      - ./backend/data/qdrant-docker:/qdrant/storage

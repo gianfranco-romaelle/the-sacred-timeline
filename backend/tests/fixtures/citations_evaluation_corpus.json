@@ -1,0 +1,418 @@
+{
+  "schema_version": "citation_evaluation_corpus.v1",
+  "records": [
+    {
+      "id": "prml_clean",
+      "original_text": "Bishop, Christopher M. 2006. Pattern Recognition and Machine Learning. Springer. ISBN 9780387310732.",
+      "source_kind": "library_metadata",
+      "tags": ["realistic", "book", "clean"],
+      "expectation": {
+        "citation_type": "book",
+        "title_contains": "Pattern Recognition and Machine Learning",
+        "authors_include": ["Bishop"],
+        "year": "2006",
+        "identifiers": {"isbn13": "9780387310732"},
+        "must_warn": [],
+        "should_queue_for_review": false,
+        "review_reason_codes": [],
+        "work_cluster_id": "work_prml",
+        "edition_group_id": "edition_prml_2006"
+      }
+    },
+    {
+      "id": "prml_messy",
+      "original_text": "Bishop, C. M., 2006, Pattern recognition & machine learning, Springer Verlag.",
+      "source_kind": "website_bibliography",
+      "tags": ["synthetic", "book", "messy_abbreviation", "hard_merge_positive"],
+      "expectation": {
+        "citation_type": "book",
+        "title_contains": "Pattern recognition",
+        "authors_include": ["Bishop"],
+        "year": "2006",
+        "identifiers": {},
+        "must_warn": [],
+        "should_queue_for_review": false,
+        "review_reason_codes": [],
+        "work_cluster_id": "work_prml",
+        "edition_group_id": "edition_prml_2006"
+      }
+    },
+    {
+      "id": "ether_clean",
+      "original_text": "Smith, John, and Jane Doe. 2018. \"On Ether Drift.\" Journal of Curious Physics 12(3): 100-120. doi:10.1234/example",
+      "source_kind": "website_bibliography",
+      "tags": ["synthetic", "article", "identifier_anchor"],
+      "expectation": {
+        "citation_type": "article",
+        "title_contains": "On Ether Drift",
+        "authors_include": ["Smith", "Doe"],
+        "year": "2018",
+        "identifiers": {"doi": "10.1234/example"},
+        "must_warn": [],
+        "should_queue_for_review": false,
+        "review_reason_codes": [],
+        "work_cluster_id": "work_ether_drift",
+        "edition_group_id": "edition_ether_jcp_12_3"
+      }
+    },
+    {
+      "id": "ether_ocr",
+      "original_text": "Sm1th, J0hn & Jane Do e. 2018. On Ether Dr1ft. Journal of Curious Physics 12(3):100-120. https://doi.org/10.1234/example",
+      "source_kind": "ocr_footnote",
+      "tags": ["synthetic", "article", "ocr_noise", "hard_merge_positive"],
+      "expectation": {
+        "citation_type": "article",
+        "title_contains": "Ether",
+        "authors_include": ["John", "Jane"],
+        "year": "2018",
+        "identifiers": {"doi": "10.1234/example"},
+        "must_warn": [],
+        "should_queue_for_review": false,
+        "review_reason_codes": [],
+        "work_cluster_id": "work_ether_drift",
+        "edition_group_id": "edition_ether_jcp_12_3"
+      }
+    },
+    {
+      "id": "cartwright_chapter",
+      "original_text": "Cartwright, Nancy. 1995. Models and the Limits of Theory. In: Scientific Models, edited by Margaret Morrison and Mary Morgan, pages 49-67. Cambridge University Press.",
+      "source_kind": "bibliography",
+      "tags": ["realistic", "chapter", "edited_volume"],
+      "expectation": {
+        "citation_type": "chapter",
+        "title_contains": "Models and the Limits of Theory",
+        "authors_include": ["Cartwright"],
+        "year": "1995",
+        "identifiers": {},
+        "must_warn": ["edited_volume"],
+        "should_queue_for_review": true,
+        "review_reason_codes": ["edited_volume"],
+        "work_cluster_id": "work_models_limits",
+        "edition_group_id": "edition_models_limits_cambridge"
+      }
+    },
+    {
+      "id": "sheaf_thesis",
+      "original_text": "Nguyen, Lan. 2019. Sheaf-Theoretic Methods in Biological Inference. PhD thesis, University of Chicago.",
+      "source_kind": "library_metadata",
+      "tags": ["synthetic", "thesis"],
+      "expectation": {
+        "citation_type": "thesis",
+        "title_contains": "Sheaf",
+        "authors_include": ["Nguyen"],
+        "year": "2019",
+        "identifiers": {},
+        "must_warn": [],
+        "should_queue_for_review": false,
+        "review_reason_codes": [],
+        "work_cluster_id": "work_sheaf_thesis",
+        "edition_group_id": "edition_sheaf_thesis"
+      }
+    },
+    {
+      "id": "sparse_preprint",
+      "original_text": "Garcia, Elena. 2021. Sparse Causal Topology for Dynamic Systems. arXiv:2101.12345v2 preprint.",
+      "source_kind": "preprint_server",
+      "tags": ["synthetic", "preprint", "identifier_anchor"],
+      "expectation": {
+        "citation_type": "preprint",
+        "title_contains": "Sparse Causal Topology",
+        "authors_include": ["Garcia"],
+        "year": "2021",
+        "identifiers": {"arxiv": "2101.12345"},
+        "must_warn": [],
+        "should_queue_for_review": false,
+        "review_reason_codes": [],
+        "work_cluster_id": "work_sparse_causal",
+        "edition_group_id": "edition_sparse_causal_arxiv"
+      }
+    },
+    {
+      "id": "husserl_translation",
+      "original_text": "Husserl, Edmund. 1931. Ideas: General Introduction to Pure Phenomenology. Trans. W. R. Boyce Gibson. London: Allen & Unwin.",
+      "source_kind": "catalog_card",
+      "tags": ["realistic", "book", "translation"],
+      "expectation": {
+        "citation_type": "book",
+        "title_contains": "General Introduction to Pure Phenomenology",
+        "authors_include": ["Husserl"],
+        "year": "1931",
+        "identifiers": {},
+        "must_warn": ["translated_work"],
+        "should_queue_for_review": true,
+        "review_reason_codes": ["translated_work"],
+        "work_cluster_id": "work_ideas_phenomenology",
+        "edition_group_id": "edition_ideas_boyce_gibson"
+      }
+    },
+    {
+      "id": "whitehead_1929",
+      "original_text": "Whitehead, Alfred North. 1929. Process and Reality. New York: Macmillan. ISBN 9780029351801.",
+      "source_kind": "library_metadata",
+      "tags": ["realistic", "book", "edition_collision"],
+      "expectation": {
+        "citation_type": "book",
+        "title_contains": "Process and Reality",
+        "authors_include": ["Whitehead"],
+        "year": "1929",
+        "identifiers": {"isbn13": "9780029351801"},
+        "must_warn": [],
+        "should_queue_for_review": false,
+        "review_reason_codes": [],
+        "work_cluster_id": "work_process_reality",
+        "edition_group_id": "edition_process_reality_1929"
+      }
+    },
+    {
+      "id": "whitehead_1978",
+      "original_text": "Whitehead, Alfred North. 1978. Process and Reality. Corrected Edition. New York: Free Press. ISBN 9780029352105.",
+      "source_kind": "library_metadata",
+      "tags": ["realistic", "book", "edition_collision"],
+      "expectation": {
+        "citation_type": "book",
+        "title_contains": "Process and Reality",
+        "authors_include": ["Whitehead"],
+        "year": "1978",
+        "identifiers": {"isbn13": "9780029352105"},
+        "must_warn": [],
+        "should_queue_for_review": false,
+        "review_reason_codes": [],
+        "work_cluster_id": "work_process_reality",
+        "edition_group_id": "edition_process_reality_1978"
+      }
+    },
+    {
+      "id": "collected_works_vol2",
+      "original_text": "Collected Works. Vol. II. 1968. Oxford University Press.",
+      "source_kind": "bibliography",
+      "tags": ["synthetic", "multivolume", "collected_works", "common_title"],
+      "expectation": {
+        "citation_type": "book",
+        "title_contains": "Collected Works",
+        "authors_include": [],
+        "year": "1968",
+        "identifiers": {},
+        "must_warn": ["common_title", "multivolume_work", "collected_works"],
+        "should_queue_for_review": true,
+        "review_reason_codes": ["common_title", "multivolume_work", "collected_works"],
+        "work_cluster_id": "work_collected_works_vol2",
+        "edition_group_id": "edition_collected_works_vol2"
+      }
+    },
+    {
+      "id": "selected_works_vol1",
+      "original_text": "Selected Works. Vol. I. 1971. Harvard University Press.",
+      "source_kind": "bibliography",
+      "tags": ["synthetic", "multivolume", "collected_works", "hard_negative"],
+      "expectation": {
+        "citation_type": "book",
+        "title_contains": "Selected Works",
+        "authors_include": [],
+        "year": "1971",
+        "identifiers": {},
+        "must_warn": ["common_title", "multivolume_work", "collected_works"],
+        "should_queue_for_review": true,
+        "review_reason_codes": ["common_title", "multivolume_work", "collected_works"],
+        "work_cluster_id": "work_selected_works_vol1",
+        "edition_group_id": "edition_selected_works_vol1"
+      }
+    },
+    {
+      "id": "footnote_whitehead_fragment",
+      "original_text": "Whitehead 1929, Process and Reality, p. 44.",
+      "source_kind": "footnote_fragment",
+      "tags": ["realistic", "partial_fragment", "book_fragment"],
+      "expectation": {
+        "citation_type": "book",
+        "title_contains": "Process and Reality",
+        "authors_include": ["Whitehead"],
+        "year": "1929",
+        "identifiers": {},
+        "must_warn": [],
+        "should_queue_for_review": true,
+        "review_reason_codes": ["partial_fragment"],
+        "work_cluster_id": "work_process_reality",
+        "edition_group_id": "edition_process_reality_fragment"
+      }
+    },
+    {
+      "id": "footnote_prml_fragment",
+      "original_text": "ibid., Pattern Recognition and Machine Learning, Springer, 2006",
+      "source_kind": "footnote_fragment",
+      "tags": ["synthetic", "partial_fragment", "book_fragment", "common_title"],
+      "expectation": {
+        "citation_type": "book",
+        "title_contains": "Pattern Recognition",
+        "authors_include": [],
+        "year": "2006",
+        "identifiers": {},
+        "must_warn": ["common_title"],
+        "should_queue_for_review": true,
+        "review_reason_codes": ["partial_fragment"],
+        "work_cluster_id": "work_prml",
+        "edition_group_id": "edition_prml_fragment"
+      }
+    },
+    {
+      "id": "intro_cambridge",
+      "original_text": "Introduction. 2010. Cambridge University Press.",
+      "source_kind": "bibliography",
+      "tags": ["synthetic", "hard_negative", "common_title"],
+      "expectation": {
+        "citation_type": "book",
+        "title_contains": "Introduction",
+        "authors_include": [],
+        "year": "2010",
+        "identifiers": {},
+        "must_warn": ["common_title"],
+        "should_queue_for_review": true,
+        "review_reason_codes": ["common_title"],
+        "work_cluster_id": "work_introduction_cambridge",
+        "edition_group_id": "edition_introduction_cambridge_2010"
+      }
+    },
+    {
+      "id": "intro_oxford",
+      "original_text": "Introduction. 1998. Oxford University Press.",
+      "source_kind": "bibliography",
+      "tags": ["synthetic", "hard_negative", "common_title"],
+      "expectation": {
+        "citation_type": "book",
+        "title_contains": "Introduction",
+        "authors_include": [],
+        "year": "1998",
+        "identifiers": {},
+        "must_warn": ["common_title"],
+        "should_queue_for_review": true,
+        "review_reason_codes": ["common_title"],
+        "work_cluster_id": "work_introduction_oxford",
+        "edition_group_id": "edition_introduction_oxford_1998"
+      }
+    }
+  ],
+  "provider_ranking_cases": [
+    {
+      "id": "ia_whitehead_1929",
+      "provider": "internet_archive",
+      "query_record_id": "whitehead_1929",
+      "expected_top_candidate_id": "processreality1929",
+      "relevant_candidate_ids": ["processreality1929"],
+      "expected_should_queue_for_review": true,
+      "notes": "Edition collision plus borrow gate should remain human-reviewed.",
+      "candidates": [
+        {
+          "provider_record_id": "processreality1929",
+          "title": "Process and Reality",
+          "authors": ["Whitehead, Alfred North"],
+          "year": "1929",
+          "publisher": "Macmillan",
+          "identifiers": {"isbn13": "9780029351801"},
+          "availability": "borrowable",
+          "file_format": "pdf"
+        },
+        {
+          "provider_record_id": "processreality1978",
+          "title": "Process and Reality",
+          "authors": ["Whitehead, Alfred North"],
+          "year": "1978",
+          "publisher": "Free Press",
+          "identifiers": {"isbn13": "9780029352105"},
+          "availability": "borrowable",
+          "file_format": "pdf"
+        },
+        {
+          "provider_record_id": "science_modern_world",
+          "title": "Science and the Modern World",
+          "authors": ["Whitehead, Alfred North"],
+          "year": "1925",
+          "publisher": "Macmillan",
+          "identifiers": {"ia_identifier": "science_modern_world"},
+          "availability": "borrowable",
+          "file_format": "pdf"
+        }
+      ]
+    },
+    {
+      "id": "libgen_prml",
+      "provider": "libgen",
+      "query_record_id": "prml_clean",
+      "expected_top_candidate_id": "libgen-prml-2006",
+      "relevant_candidate_ids": ["libgen-prml-2006"],
+      "expected_should_queue_for_review": true,
+      "notes": "Exact ISBN match should rank first, but mirror variability still justifies review.",
+      "candidates": [
+        {
+          "provider_record_id": "libgen-prml-2006",
+          "title": "Pattern Recognition and Machine Learning",
+          "authors": ["Bishop, Christopher M."],
+          "year": "2006",
+          "publisher": "Springer",
+          "identifiers": {"isbn13": "9780387310732", "md5": "abc123"},
+          "availability": "available",
+          "file_format": "pdf"
+        },
+        {
+          "provider_record_id": "libgen-prml-alt",
+          "title": "Pattern recognition & machine learning",
+          "authors": ["Bishop, C. M."],
+          "year": "2006",
+          "publisher": "Springer-Verlag",
+          "identifiers": {"md5": "def456"},
+          "availability": "available",
+          "file_format": "djvu"
+        },
+        {
+          "provider_record_id": "libgen-ml-patterns",
+          "title": "Machine Learning Patterns",
+          "authors": ["Bishop, John"],
+          "year": "2006",
+          "publisher": "Springer",
+          "identifiers": {"md5": "ghi789"},
+          "availability": "available",
+          "file_format": "pdf"
+        }
+      ]
+    },
+    {
+      "id": "scihub_ether_article",
+      "provider": "scihub",
+      "query_record_id": "ether_clean",
+      "expected_top_candidate_id": "10.1234/example",
+      "relevant_candidate_ids": ["10.1234/example"],
+      "expected_should_queue_for_review": true,
+      "notes": "Even exact DOI matches should stay review-gated because of policy and source risk.",
+      "candidates": [
+        {
+          "provider_record_id": "10.1234/example",
+          "title": "On Ether Drift",
+          "authors": ["Smith, John", "Doe, Jane"],
+          "year": "2018",
+          "journal": "Journal of Curious Physics",
+          "identifiers": {"doi": "10.1234/example"},
+          "availability": "available",
+          "file_format": "pdf"
+        },
+        {
+          "provider_record_id": "10.1234/near-miss",
+          "title": "On Ether Drift in Condensed Media",
+          "authors": ["Smith, John", "Doe, Jane"],
+          "year": "2019",
+          "journal": "Journal of Curious Physics",
+          "identifiers": {"doi": "10.1234/near-miss"},
+          "availability": "available",
+          "file_format": "pdf"
+        },
+        {
+          "provider_record_id": "pmid-1234567",
+          "title": "Ether Drift Revisited",
+          "authors": ["Roe, Janet"],
+          "year": "2018",
+          "journal": "Physics Notes",
+          "identifiers": {"pmid": "1234567"},
+          "availability": "available",
+          "file_format": "pdf"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+import { motion } from "motion/react";
+import { AdminModeToggle } from "@/components/admin/admin-mode-toggle";
+import { useHistoricalRuntime } from "@/historical/runtime-context";
+import { ViewNavigation } from "./view-navigation";
+
+
+export function AppHeader() {
+  const { loading, snapshot } = useHistoricalRuntime();
+
+  return (
+    <motion.header
+      className="app-header"
+      initial={{ opacity: 0, y: 18 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.45, ease: "easeOut" }}
+    >
+      <div className="app-header__intro">
+        <p className="eyebrow">Sacred Timeline Project</p>
+        <h1>History of science and religion as one coordinated knowledge space.</h1>
+        <p className="app-header__summary">
+          A coordinated scholarly graph for historical ontology, semantic evidence, and curated
+          projection work.
+        </p>
+        <div className="app-header__meta">
+          <span>Zeroth-Sixth Calculi active</span>
+          <span>Genesis ontology loaded</span>
+          <span>{snapshot ? "Historical ingest connected" : "Seed graph active"}</span>
+          {loading ? <span>Historical ingest loading</span> : null}
+        </div>
+      </div>
+      <div className="app-header__controls">
+        <AdminModeToggle />
+        <ViewNavigation />
+      </div>
+    </motion.header>
+  );
+}
