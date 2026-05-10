@@ -1,0 +1,571 @@
+{
+  "version": 1,
+  "bundleLayouts": {
+    "calculus": {
+      "view": {
+        "zoom": 0.45,
+        "scrollLeft": 2,
+        "scrollTop": 0
+      },
+      "selection": [],
+      "nodes": {
+        "g-item-person-875-Empedocles": {
+          "x": 235.62693418912554,
+          "y": 776.8787742115414
+        },
+        "g-item-person-1381-Yāska": {
+          "x": 1406.6666666666665,
+          "y": 254.66666666666669
+        },
+        "g-item-person-869-Heraclitus": {
+          "x": 1442.2451332743062,
+          "y": 262.7872194986683
+        },
+        "g-item-person-870-Parmenides": {
+          "x": 1470.776848229045,
+          "y": 285.5405029142505
+        },
+        "g-item-person-861-Thales of Miletus": {
+          "x": 1486.6107554655762,
+          "y": 318.4199500822489
+        },
+        "g-item-person-864-Anaximander": {
+          "x": 1486.6107554655762,
+          "y": 354.9133832510845
+        },
+        "g-item-person-868-Pythagoras": {
+          "x": 1470.776848229045,
+          "y": 387.79283041908286
+        },
+        "g-item-person-867-Xenophanes": {
+          "x": 1442.2451332743062,
+          "y": 410.54611383466505
+        },
+        "g-item-person-1383-Pāṇini": {
+          "x": 1406.6666666666665,
+          "y": 418.6666666666667
+        },
+        "g-item-person-708-Menaechmus": {
+          "x": 1510.956616770819,
+          "y": 285.8768418267107
+        },
+        "g-item-person-1468-Aristoxenus": {
+          "x": 1522.6655440562904,
+          "y": 336.1563291832226
+        },
+        "g-item-person-2665-Aristoxenus": {
+          "x": 1511.399471041876,
+          "y": 386.53689513720906
+        },
+        "g-item-person-1466-Theophrastus": {
+          "x": 1479.389781657399,
+          "y": 427.0400507243899
+        },
+        "g-item-person-2676-Theophrastus": {
+          "x": 1432.976387458532,
+          "y": 449.6436492421191
+        },
+        "g-item-person-2671-Strato of Lampsacus": {
+          "x": 1552.6065036864406,
+          "y": 302.003083893939
+        },
+        "g-item-person-1473-Aristo of Ceos": {
+          "x": 1553.1938813128781,
+          "y": 368.7567799108271
+        },
+        "g-item-person-2673-Aristo of Ceos": {
+          "x": 1524.7597470402766,
+          "y": 429.1546354402976
+        },
+        "g-item-person-177-Aristarchus of Samos": {
+          "x": 1472.9358298830962,
+          "y": 471.23411446365134
+        },
+        "g-item-person-850-Kātyāyana": {
+          "x": 1407.9864922129514,
+          "y": 486.66086008937015
+        },
+        "g-item-person-2666-Critolaus": {
+          "x": 1571.376838856082,
+          "y": 254.65106341135197
+        },
+        "g-item-person-147-Diocles": {
+          "x": 1590.6506406425747,
+          "y": 334.2382268316321
+        },
+        "g-item-person-157-Hypsicles of Alexandria": {
+          "x": 1573.4841599677757,
+          "y": 414.30637254410095
+        },
+        "g-item-person-178-Theodosius of Bithynia": {
+          "x": 1523.2774288623973,
+          "y": 478.99702231903876
+        },
+        "g-item-person-152-Posidonius": {
+          "x": 1449.9745061670092,
+          "y": 515.4973995897651
+        },
+        "g-item-person-263-Mathematician": {
+          "x": 1618.3144204742075,
+          "y": 284.42464997298885
+        },
+        "g-item-person-273-Kummer surface": {
+          "x": 1620.0216653508314,
+          "y": 381.4287548270728
+        },
+        "g-item-person-274-Humbert surface": {
+          "x": 1579.4713361107142,
+          "y": 469.56717915000326
+        },
+        "g-item-person-315-Italian school of algebraic geometry": {
+          "x": 1504.694922777012,
+          "y": 531.3830270577866
+        },
+        "g-item-person-405-Rjukan Falls": {
+          "x": 1410.502811082992,
+          "y": 554.6329117506639
+        },
+        "g-item-person-1268-Keralācārya": {
+          "x": 1658.6056996701668,
+          "y": 331.12377488878354
+        },
+        "g-item-person-1269-Vyāghrapāda": {
+          "x": 1636.060862622372,
+          "y": 440.98494340586217
+        },
+        "g-item-person-1270-Kṛṣṇa": {
+          "x": 1568.0816917303619,
+          "y": 530.1845978350382
+        },
+        "g-item-person-1271-Kṛṣṇa-śiṣya": {
+          "x": 1468.1322954991176,
+          "y": 581.0556526546432
+        },
+        "g-item-person-1288-Mazhamaṅgalaṃ Nārāyaṇan Nampūtiri (Nārāyaṇa I)": {
+          "x": 1683.7191853004906,
+          "y": 265.68848749408806
+        },
+        "g-item-person-1291-Jyeṣṭhadeva-Śiṣya": {
+          "x": 1687.0786385048514,
+          "y": 392.9261196485539
+        },
+        "g-item-person-1292-Puruṣottama I (Māttūr Nampūtiri)": {
+          "x": 1634.899061659511,
+          "y": 509.0208771630459
+        },
+        "g-item-person-1293-Subrahmaṇya I (Māttūr Nampūtiri)": {
+          "x": 1537.5152598992038,
+          "y": 590.9787695030556
+        },
+        "g-item-person-1294-Nārāyaṇa of Kaṇvavastu (Nārāyaṇa II)": {
+          "x": 1414.2152894965084,
+          "y": 622.5670309430573
+        },
+        "g-item-person-1305-Iṭakkāṭṭu/Eṭakkāṭṭu Kukkuṇiyāḷ": {
+          "x": 1726.51493246042,
+          "y": 326.81339976027755
+        },
+        "g-item-person-1306-Rāma-śiṣya": {
+          "x": 1699.115168887284,
+          "y": 466.56614144973713
+        },
+        "g-item-person-1307-Puruṣottama II": {
+          "x": 1613.792392803849,
+          "y": 580.5906990458996
+        },
+        "g-item-person-1320-Parameśvara II": {
+          "x": 1754.3492949333836,
+          "y": 403.2458676347463
+        },
+        "g-item-person-1321-Parameśvara III (pupil of Śaṅkara)": {
+          "x": 1691.0302579819786,
+          "y": 547.5062927673082
+        },
+        "g-item-person-1335-Subrahmaṇya Śāstri": {
+          "x": 1762.6325933160088,
+          "y": 491.04366969715414
+        },
+        "g-item-person-1373-Gārgya": {
+          "x": 1794.3625559203906,
+          "y": 321.30771306415033
+        },
+        "g-item-person-1374-Gālava": {
+          "x": 1747.8521490785338,
+          "y": 585.0141381484227
+        },
+        "g-item-person-1465-Aristotle": {
+          "x": 789.0183851923114,
+          "y": 72
+        },
+        "g-item-person-2677-Aristotle": {
+          "x": 835.6288680831825,
+          "y": 72
+        },
+        "g-item-person-2670-Clearchus of Soli": {
+          "x": 827.5946686748305,
+          "y": 72
+        },
+        "g-item-person-1471-Strato of Lampsacus": {
+          "x": 880.151033751858,
+          "y": 72
+        },
+        "g-item-person-1474-Critolaus": {
+          "x": 876.5172496780424,
+          "y": 72
+        },
+        "g-item-person-207-Alex Krizhevsky": {
+          "x": 802.2764808588146,
+          "y": 72
+        },
+        "g-item-person-255-Kakeya set": {
+          "x": 931.7248245149059,
+          "y": 72
+        },
+        "g-item-person-1266-Udayadivākara": {
+          "x": 854.8195116415027,
+          "y": 72
+        },
+        "g-item-person-1267-Acyuta I (Devakerala/Keralajyotiṣa)": {
+          "x": 988.2880036504123,
+          "y": 72
+        },
+        "g-item-person-1283-Ravi Nampūtiri": {
+          "x": 814.3615379304586,
+          "y": 72
+        },
+        "g-item-person-1287-Citrabhānu Śiṣya": {
+          "x": 916.4515593869017,
+          "y": 72
+        },
+        "g-item-person-1303-Maṅgalaśreṇivipra-Śiṣya": {
+          "x": 880.9501938170179,
+          "y": 72
+        },
+        "g-item-person-1304-Pāṇkkāṭṭu/Iṭakkāṭṭu Namputiri": {
+          "x": 982.5231652028065,
+          "y": 72
+        },
+        "g-item-person-1317-Vāsudeva of Vaḷḷimana (Vāsudeva II)": {
+          "x": 825.2704588104475,
+          "y": 72
+        },
+        "g-item-person-1318-Tuppan Nampūtiri of Iṭavaṭṭkkāt": {
+          "x": 955.4222865069619,
+          "y": 72
+        },
+        "g-item-person-1319-Nārāyaṇa of Iṭavaṭṭkkāt (Nārāyaṇa IV)": {
+          "x": 1047.6019065598132,
+          "y": 72
+        },
+        "g-item-person-1331-Śrīkaṇṭha Vāriyar of Veḷḷrakāḍ": {
+          "x": 905.98033347177,
+          "y": 72
+        },
+        "g-item-person-1332-Ghaṭigopa": {
+          "x": 1032.5340373170802,
+          "y": 72
+        },
+        "g-item-person-1333-Goda Varma, Vidvān Iḷaya Tampurān": {
+          "x": 1105.8426055572218,
+          "y": 72
+        },
+        "g-item-person-1371-Āpiśali": {
+          "x": 993.4200686229667,
+          "y": 72
+        },
+        "g-item-person-1372-Kāśyapa": {
+          "x": 1106.341675128287,
+          "y": 72
+        },
+        "g-item-person-874-Euclid": {
+          "x": 935.3683847105862,
+          "y": 961.2683050385499
+        },
+        "g-item-person-1250-Hillel the Elder": {
+          "x": 960.6865725266022,
+          "y": 1005.467045878951
+        },
+        "g-item-person-1505-Vitruvius": {
+          "x": 886.4458037073742,
+          "y": 970.9141261510706
+        },
+        "g-item-person-560-Eric Urban": {
+          "x": 908.143541743914,
+          "y": 1023.6007973129756
+        },
+        "g-item-person-747-Ising model": {
+          "x": 831.2382288705107,
+          "y": 964.454504990846
+        },
+        "g-item-person-1273-Vidyāmādhava": {
+          "x": 948.601515454958,
+          "y": 1072.4113604539984
+        },
+        "g-item-person-1274-Viṣṇu (of Nīlamana)": {
+          "x": 846.5114939985151,
+          "y": 1025.9853597165607
+        },
+        "g-item-person-1295-Rudra Vāriyar (Rudra II)": {
+          "x": 882.0128595683988,
+          "y": 1086.4181077891442
+        },
+        "g-item-person-1296-Śaṅkara of Mahiṣamaṅgalam (Śaṅkara III)": {
+          "x": 780.4398881826103,
+          "y": 1009.7132680072291
+        },
+        "g-item-person-1309-Vāsudevasvāmī (Vāsudeva I)": {
+          "x": 1080.0384642324357,
+          "y": 1135.1919993863057
+        },
+        "g-item-person-1310-Śyāmaḷavāraṇa Rāja": {
+          "x": 937.6925945749688,
+          "y": 1139.577115695367
+        },
+        "g-item-person-1311-Dāmodara of Bhāradvāja Gotra (Dāmodara III)": {
+          "x": 807.5407668784547,
+          "y": 1081.7664107970397
+        },
+        "g-item-person-1312-Kṛṣṇa II": {
+          "x": 715.3611468256036,
+          "y": 973.2100037982054
+        },
+        "g-item-person-1322-Bhāradvāja-dvija": {
+          "x": 1163.9821620838147,
+          "y": 1138.8962330612044
+        },
+        "g-item-person-1323-Nārāyaṇa of Peruvanam (Nārāyaṇa V)": {
+          "x": 1011.7160462382382,
+          "y": 1179.336320414997
+        },
+        "g-item-person-1324-Kṛṣṇadāsa (Koccukṛṣṇan Āśān)": {
+          "x": 856.9827199136463,
+          "y": 1149.7057884520327
+        },
+        "g-item-person-1325-Śaṅkara of Muktisthala (Śaṅkara IV)": {
+          "x": 730.4290160683365,
+          "y": 1055.873327422203
+        },
+        "g-item-person-1336-Subrahmaṇya of Kunnattu Mana (Subrahmaṇya II)": {
+          "x": 1252.991851106949,
+          "y": 1119.0922564591651
+        },
+        "g-item-person-1337-Puruṣottaman Mūssatu (Puruṣottama III)": {
+          "x": 1100.5036284072476,
+          "y": 1200.1134107269404
+        },
+        "g-item-person-1338-Rāma Varma Koyittampurān": {
+          "x": 927.9627256717225,
+          "y": 1206.9487881273876
+        },
+        "g-item-person-1339-Rāma Vāriyar of Kaikkuḷaṅra": {
+          "x": 769.5429847624494,
+          "y": 1138.2445583359458
+        },
+        "g-item-person-1340-A. R. Rajaraja Varma Koyittampurān": {
+          "x": 656.6213782571298,
+          "y": 1007.6084366648929
+        },
+        "g-item-person-1375-Cākravarmaṇa": {
+          "x": 750.9118329887301,
+          "y": 1166.7410379674225
+        },
+        "g-classification-calculus-Zeroth": {
+          "x": 717.7777438693577,
+          "y": 846.2963189019097
+        },
+        "g-item-person-871-Anaxagoras": {
+          "x": 1098.4956300720476,
+          "y": 871.2869449978593
+        },
+        "g-item-person-158-Zeno of Elea": {
+          "x": 653.6675623069791,
+          "y": 897.4224826543257
+        },
+        "g-item-person-1622-Democritus": {
+          "x": 637.833655070448,
+          "y": 864.5430354863274
+        },
+        "g-item-person-872-Plato": {
+          "x": 637.833655070448,
+          "y": 828.0496023174919
+        },
+        "g-item-person-14-Eudoxus of Cnidus": {
+          "x": 653.6675623069791,
+          "y": 795.1701551494936
+        },
+        "g-item-person-1467-Eudemus of Rhodes": {
+          "x": 1108.7594604023066,
+          "y": 910.6116019522112
+        },
+        "g-item-person-2675-Eudemus of Rhodes": {
+          "x": 1062.1489775114353,
+          "y": 888.4172623204515
+        },
+        "g-item-person-165-Autolycus of Pitane": {
+          "x": 613.4877937652052,
+          "y": 897.0861437418655
+        },
+        "g-item-person-1621-Pyrrho": {
+          "x": 601.7788664797338,
+          "y": 846.8066563853538
+        },
+        "g-item-person-1469-Dicaerchus": {
+          "x": 613.0449394941481,
+          "y": 796.4260904313674
+        },
+        "g-item-person-1472-Lyco of Troas": {
+          "x": 1017.6268118427599,
+          "y": 891.9592289303939
+        },
+        "g-item-person-2672-Lyco of Troas": {
+          "x": 571.8379068495833,
+          "y": 880.9599016746374
+        },
+        "g-item-person-713-Archimedes": {
+          "x": 571.250529223146,
+          "y": 814.2062056577493
+        },
+        "g-item-person-1624-Aenesidemus": {
+          "x": 969.3639244902722,
+          "y": 879.4231010851757
+        },
+        "g-item-person-1252-Shammai": {
+          "x": 533.7937698934495,
+          "y": 848.7247587369443
+        },
+        "g-item-person-753-Twelvefold way": {
+          "x": 506.12999006181667,
+          "y": 898.5383355955876
+        },
+        "g-item-person-832-Spark chamber": {
+          "x": 504.42274518519264,
+          "y": 801.5342307415036
+        },
+        "g-item-person-1276-Tāmaranallūr": {
+          "x": 909.4898419442056,
+          "y": 911.7137204291066
+        },
+        "g-item-person-1277-Nityaprakāśa Yati": {
+          "x": 465.8387108658576,
+          "y": 851.8392106797928
+        },
+        "g-item-person-1297-Mādhava of Iñcakkāzhvā (Mādhava II)": {
+          "x": 857.0215780458636,
+          "y": 868.3856770024397
+        },
+        "g-item-person-1299-Nīlakaṇṭha II": {
+          "x": 437.36577203117304,
+          "y": 790.0368659200224
+        },
+        "g-item-person-1313-Keralīya-dvija": {
+          "x": 397.9294780756044,
+          "y": 856.1495858082989
+        },
+        "g-item-person-1326-Śaṅkara V": {
+          "x": 791.9352400373962,
+          "y": 888.275549286386
+        },
+        "g-item-person-1327-Bhūtanāthapura Somayāji": {
+          "x": 370.0951156026407,
+          "y": 779.7171179338302
+        },
+        "g-item-person-1341-Vāsuṇṇi Mūssu of Veḷḷānaśśeri": {
+          "x": 330.0818546156337,
+          "y": 861.6552725044262
+        },
+        "g-item-person-873-Aristotle": {
+          "x": 388.86596088259466,
+          "y": 794.6390939561335
+        },
+        "g-item-person-2674-Dicaearchus": {
+          "x": 351.7213124995021,
+          "y": 778.1451570664087
+        },
+        "g-item-person-1470-Clearchus of Soli": {
+          "x": 398.1347066983691,
+          "y": 755.5415585486794
+        },
+        "g-item-person-149-Eratosthenes": {
+          "x": 306.3513471166244,
+          "y": 776.0305723505011
+        },
+        "g-item-person-710-Apollonius of Perga": {
+          "x": 614.4715831757144,
+          "y": 548.7659533531889
+        },
+        "g-item-person-1385-Patañjali": {
+          "x": 679.4209208458594,
+          "y": 533.3392077274702
+        },
+        "g-item-person-1397-Jesus Christ": {
+          "x": 564.1299841964131,
+          "y": 541.0030454978016
+        },
+        "g-item-person-148-Geminus": {
+          "x": 637.4329068918014,
+          "y": 504.5026682270752
+        },
+        "g-item-person-1260-Vararuci I": {
+          "x": 507.93607694809657,
+          "y": 550.4328886668371
+        },
+        "g-item-person-1261-Vararuci II": {
+          "x": 582.7124902817984,
+          "y": 488.6170407590538
+        },
+        "g-item-person-1263-Devācārya": {
+          "x": 676.9046019758189,
+          "y": 465.36715606617656
+        },
+        "g-item-person-1278-Kumāra Gaṇaka": {
+          "x": 451.3465504364385,
+          "y": 579.0151244109782
+        },
+        "g-item-person-1279-Rudra I": {
+          "x": 519.3257213284486,
+          "y": 489.81546998180215
+        },
+        "g-item-person-1282-Dāmodara of Vaṭaśreṇi (Dāmodara I)": {
+          "x": 619.275117559693,
+          "y": 438.9444151621972
+        },
+        "g-item-person-1300-Nārāyaṇa III": {
+          "x": 452.5083513992995,
+          "y": 510.9791906537944
+        },
+        "g-item-person-1301-Dāmodara of Maṅgalaśreṇi (Dāmodara II)": {
+          "x": 549.8921531596069,
+          "y": 429.02129831378477
+        },
+        "g-item-person-1302-Iṭakramañceri Nampūtiri": {
+          "x": 673.1921235623021,
+          "y": 397.4330368737832
+        },
+        "g-item-person-1314-Govinda-śiṣya": {
+          "x": 388.2922441715267,
+          "y": 553.4339263671033
+        },
+        "g-item-person-1315-Veṇād Brāhmaṇa": {
+          "x": 473.6150202549618,
+          "y": 439.4093687709409
+        },
+        "g-item-person-1328-Śrīkumāra (son of Nīlakaṇṭha)": {
+          "x": 396.3771550768322,
+          "y": 472.4937750495323
+        },
+        "g-item-person-1343-P. S. Purushottaman Namputiri": {
+          "x": 324.7748197428018,
+          "y": 528.9563981196862
+        },
+        "g-item-person-1344-K. V. A. Rama Poduval": {
+          "x": 427.00819975568106,
+          "y": 389.7967002465641
+        },
+        "g-item-person-1376-Bharadvāja": {
+          "x": 339.555263980277,
+          "y": 434.9859296684177
+        }
+      }
+    }
+  }
+}
