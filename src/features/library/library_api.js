@@ -372,11 +372,11 @@ function createDemoLawvereCollectionResponse() {
       { id: "cohesion_space", label: "Cohesion and space", summary: "Cohesive toposes and categories of space.", count: 11, highlights: [] },
     ],
     formalization_candidates: [
-      { id: "candidate.algebraic_theories", label: "Algebraic theories and functorial semantics", concept_family: "algebraic_theories", lean_module: "MarketGRT.LawvereConcepts", review_required: true, handoff_target: "library", target_systems: ["library"], prompt_seed: "Extract typed categorical interfaces for algebraic theories and functorial semantics into reviewed library-facing prompts.", source_family_ids: ["algebraic_theories"], source_document_ids: ["lawvere.doc.demo.functorial"] },
-      { id: "candidate.toposes", label: "Toposes, sheaves, and variable sets", concept_family: "toposes", lean_module: "MarketGRT.WebsiteTopos", review_required: true, handoff_target: "website_topos", target_systems: ["website_topos"], prompt_seed: "Use reviewed topos and sheaf material to shape website_topos interfaces without bypassing review.", source_family_ids: ["toposes"], source_document_ids: ["lawvere.doc.demo.toposes"] },
+      { id: "candidate.algebraic_theories", label: "Algebraic theories and functorial semantics", concept_family: "algebraic_theories", module: "Lawvere concepts", review_required: true, handoff_target: "library", target_systems: ["library"], prompt_seed: "Extract typed categorical interfaces for algebraic theories and functorial semantics into reviewed library-facing prompts.", source_family_ids: ["algebraic_theories"], source_document_ids: ["lawvere.doc.demo.functorial"] },
+      { id: "candidate.toposes", label: "Toposes, sheaves, and variable sets", concept_family: "toposes", module: "Site information architecture", review_required: true, handoff_target: "library", target_systems: ["library"], prompt_seed: "Use reviewed topos and sheaf material to shape site interfaces without bypassing review.", source_family_ids: ["toposes"], source_document_ids: ["lawvere.doc.demo.toposes"] },
     ],
     website_design_intents: [
-      { id: "intent.lawvere.global-mode", summary: "Keep a Lawvere-aware global prompt mode across the site.", review_required: true, handoff_target: "library", prompt_seed: "Keep Lawvere-aware retrieval and topos cues available globally while preserving human review gates.", source_family_ids: ["functorial_semantics", "toposes"], lean_module: "MarketGRT.CognitiveInvariantTopos", target_systems: ["library", "hungry_topos", "website_topos"], source_document_ids: ["lawvere.doc.demo.functorial", "lawvere.doc.demo.toposes"] },
+      { id: "intent.lawvere.global-mode", summary: "Keep a Lawvere-aware global prompt mode across the site.", review_required: true, handoff_target: "library", prompt_seed: "Keep Lawvere-aware retrieval and topos cues available globally while preserving human review gates.", source_family_ids: ["functorial_semantics", "toposes"], module: "Cognitive invariant architecture", target_systems: ["library", "site"], source_document_ids: ["lawvere.doc.demo.functorial", "lawvere.doc.demo.toposes"] },
     ],
     prompt_presets: [
       "Trace the evolution from functorial semantics to hyperdoctrines and explain the bridge in plain language.",
@@ -433,19 +433,19 @@ function createDemoCognitiveInvariantsResponse() {
       { id: "hegelian_dynamics", label: "Hegelian dynamics support", summary: "Secondary support around motion, laws, and reflective organization.", count: 1, highlights: [] },
     ],
     formalization_candidates: [
-      { id: "candidate.autopoiesis_agency_hooks", label: "Autopoiesis and agency hooks", concept_family: "autopoiesis_agency", lean_module: "MarketGRT.AutopoiesisAgencyHooks", review_required: true, handoff_target: "hungry_topos", target_systems: ["hungry_topos"], prompt_seed: "Connect operational closure, autonomy, and biosemiotic agency to reviewed local adaptation hooks without enabling autonomous mutation.", source_family_ids: ["autopoiesis_agency", "biosemiotics"], source_document_ids: ["cognitive.doc.maturana_varela.autopoiesis", "cognitive.doc.sharov.mind_agency_biosemiotics"] },
-      { id: "candidate.invariant_cognition_hooks", label: "Invariant cognition hooks", concept_family: "invariant_cognition", lean_module: "MarketGRT.InvariantCognitionHooks", review_required: true, handoff_target: "website_topos", target_systems: ["website_topos"], prompt_seed: "Treat competency as an invariant across embodiment changes and expose reviewed representation-change hooks to the website substrate.", source_family_ids: ["arbitrary_spaces", "erlangen_invariants"], source_document_ids: ["cognitive.doc.kisil.erlangen_programme_at_large"] },
-      { id: "candidate.lawvere_graphic_agency_hooks", label: "Lawvere graphic-agency bridge", concept_family: "graphic_display_bridge", lean_module: "MarketGRT.LawvereGraphicAgencyHooks", review_required: true, handoff_target: "website_topos", target_systems: ["website_topos"], prompt_seed: "Use invariant cognition and Hegelian support as reviewed scaffolding for Lawvere-style display and graphics interfaces.", source_family_ids: ["erlangen_invariants", "hegelian_support"], source_document_ids: ["cognitive.doc.kisil.erlangen_programme_at_large", "cognitive.doc.hegel.newtonianism"] },
-      { id: "candidate.cognitive_invariant_topos", label: "Cognitive invariant topos registry", concept_family: "cognitive_invariant_topos", lean_module: "MarketGRT.CognitiveInvariantTopos", review_required: true, handoff_target: "library", target_systems: ["library"], prompt_seed: "Assemble a reviewed registry that routes cognitive invariants into library, hungry_topos, and website_topos surfaces with explicit human review gates.", source_family_ids: ["autopoiesis_agency", "biosemiotics", "arbitrary_spaces", "erlangen_invariants", "hegelian_support"], source_document_ids: ["cognitive.doc.maturana_varela.autopoiesis", "cognitive.doc.kisil.erlangen_programme_at_large", "cognitive.doc.hegel.newtonianism"] },
+      { id: "candidate.autopoiesis_agency_hooks", label: "Autopoiesis and agency hooks", concept_family: "autopoiesis_agency", module: "Autopoiesis agency hooks", review_required: true, handoff_target: "hungry_topos", target_systems: ["hungry_topos"], prompt_seed: "Connect operational closure, autonomy, and biosemiotic agency to reviewed local adaptation hooks without enabling autonomous mutation.", source_family_ids: ["autopoiesis_agency", "biosemiotics"], source_document_ids: ["cognitive.doc.maturana_varela.autopoiesis", "cognitive.doc.sharov.mind_agency_biosemiotics"] },
+      { id: "candidate.invariant_cognition_hooks", label: "Invariant cognition hooks", concept_family: "invariant_cognition", module: "Invariant cognition hooks", review_required: true, handoff_target: "site", target_systems: ["site"], prompt_seed: "Treat competency as an invariant across embodiment changes and expose reviewed representation-change hooks to the website substrate.", source_family_ids: ["arbitrary_spaces", "erlangen_invariants"], source_document_ids: ["cognitive.doc.kisil.erlangen_programme_at_large"] },
+      { id: "candidate.lawvere_graphic_agency_hooks", label: "Lawvere graphic-agency bridge", concept_family: "graphic_display_bridge", module: "Lawvere graphic agency hooks", review_required: true, handoff_target: "site", target_systems: ["site"], prompt_seed: "Use invariant cognition and Hegelian support as reviewed scaffolding for Lawvere-style display and graphics interfaces.", source_family_ids: ["erlangen_invariants", "hegelian_support"], source_document_ids: ["cognitive.doc.kisil.erlangen_programme_at_large", "cognitive.doc.hegel.newtonianism"] },
+      { id: "candidate.cognitive_invariant_topos", label: "Cognitive invariant topos registry", concept_family: "cognitive_invariant_topos", module: "Cognitive invariant topos", review_required: true, handoff_target: "library", target_systems: ["library"], prompt_seed: "Assemble a reviewed registry that routes cognitive invariants into library and site surfaces with explicit human review gates.", source_family_ids: ["autopoiesis_agency", "biosemiotics", "arbitrary_spaces", "erlangen_invariants", "hegelian_support"], source_document_ids: ["cognitive.doc.maturana_varela.autopoiesis", "cognitive.doc.kisil.erlangen_programme_at_large", "cognitive.doc.hegel.newtonianism"] },
     ],
     website_design_intents: [
-      { id: "intent.cognitive.autopoiesis.hungry-topos", summary: "Expose autopoiesis and agency prompts as reviewed hungry_topos handoffs, not self-applying mutations.", review_required: true, handoff_target: "hungry_topos", target_systems: ["hungry_topos"], prompt_seed: "Use reviewed autopoiesis and agency anchors to propose local site adaptations while preserving explicit operator review.", source_family_ids: ["autopoiesis_agency", "biosemiotics"], lean_module: "MarketGRT.AutopoiesisAgencyHooks", source_document_ids: ["cognitive.doc.maturana_varela.autopoiesis", "cognitive.doc.sharov.mind_agency_biosemiotics"] },
-      { id: "intent.cognitive.website-topos.invariants", summary: "Route invariant cognition and graphic-display prompts into website_topos as reviewed design intents.", review_required: true, handoff_target: "website_topos", target_systems: ["website_topos", "library"], prompt_seed: "Frame website changes as invariant-preserving transformations across representations and embodiments, with review gates left intact.", source_family_ids: ["arbitrary_spaces", "erlangen_invariants", "hegelian_support"], lean_module: "MarketGRT.CognitiveInvariantTopos", source_document_ids: ["cognitive.doc.kisil.erlangen_programme_at_large", "cognitive.doc.hegel.newtonianism"] },
+      { id: "intent.cognitive.autopoiesis.hungry-topos", summary: "Expose autopoiesis and agency prompts as reviewed hungry_topos handoffs, not self-applying mutations.", review_required: true, handoff_target: "hungry_topos", target_systems: ["hungry_topos"], prompt_seed: "Use reviewed autopoiesis and agency anchors to propose local site adaptations while preserving explicit operator review.", source_family_ids: ["autopoiesis_agency", "biosemiotics"], module: "Autopoiesis agency hooks", source_document_ids: ["cognitive.doc.maturana_varela.autopoiesis", "cognitive.doc.sharov.mind_agency_biosemiotics"] },
+      { id: "intent.cognitive.site.invariants", summary: "Route invariant cognition and graphic-display prompts into reviewed design intents.", review_required: true, handoff_target: "site", target_systems: ["site", "library"], prompt_seed: "Frame website changes as invariant-preserving transformations across representations and embodiments, with review gates left intact.", source_family_ids: ["arbitrary_spaces", "erlangen_invariants", "hegelian_support"], module: "Cognitive invariant architecture", source_document_ids: ["cognitive.doc.kisil.erlangen_programme_at_large", "cognitive.doc.hegel.newtonianism"] },
     ],
     prompt_presets: [
       "Explain autopoiesis, agency, and biosemiotics as reviewed hooks for site adaptation without collapsing review boundaries.",
       "Show how competency across arbitrary spaces can be modeled as invariants under representation changes.",
-      "Bridge Erlangen-style invariants and Lawvere-style display structure into reviewed website-topos design intents.",
+      "Bridge Erlangen-style invariants and Lawvere-style display structure into reviewed site design intents.",
     ],
     research_map_seed: {
       title: "Demo Cognitive Invariants Spine",
@@ -641,69 +641,6 @@ export async function fetchResearchBundle(bundleId) {
 export async function fetchResearchMaps() {
   const result = await withDemoFallback(() => request("/api/research/maps"));
   return result.__demo ? { items: demoResearchMaps, demo: true } : result;
-}
-
-export async function fetchWebsiteToposExport() {
-  const result = await withDemoFallback(() => request("/api/research/topos/website"));
-  if (result.__demo) {
-    return {
-      version: "demo.website-topos.v1",
-      source_module: "demo",
-      source_ref: "demo:website-topos",
-      reviewed: true,
-      objects: [],
-      morphisms: [],
-      cohomology_summary: {
-        connected_components: 0,
-        cycle_rank_estimate: 0,
-        refinement_obstruction_count: 0,
-        zero_cochain_dimension: 0,
-        one_cochain_dimension: 0,
-        two_cochain_dimension: 0,
-      },
-      research_map_seed: {
-        title: "Demo Website Topos",
-        description: "Demo-only topos export because the backend is offline.",
-        pins: [],
-      },
-      generation_intents: [],
-      reserved_automata: {
-        inc_ref_state: { status: "reserved", note: "Demo" },
-        com_proj_state: { status: "reserved", note: "Demo" },
-      },
-      demo: true,
-    };
-  }
-  return result;
-}
-
-export async function materializeWebsiteToposMap(payload = {}) {
-  const result = await withDemoFallback(() =>
-    request("/api/research/maps/from-topos", {
-      method: "POST",
-      body: JSON.stringify(payload),
-    })
-  );
-  if (result.__demo) {
-    return {
-      map: {
-        id: `map-${Date.now()}`,
-        title: payload.title || "Demo Website Topos",
-        description: payload.description || "Demo-only website-topos materialization.",
-        source_kind: "website_topos",
-        source_ref: "demo:website-topos",
-        layout: {},
-        pin_count: 0,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-      },
-      pins_created: 0,
-      source_kind: "website_topos",
-      source_ref: "demo:website-topos",
-      demo: true,
-    };
-  }
-  return result;
 }
 
 export async function createResearchMap(payload) {

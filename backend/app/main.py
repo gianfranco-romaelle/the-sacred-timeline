@@ -21,22 +21,9 @@ from .config import settings
 from .citations.procurement_service import CitationProcurementError, CitationProcurementService
 from .citations import review_repository as citation_review_repo
 from .citations.review_service import CitationReviewError, CitationReviewService
-from .cognitive_invariants_collection import (
-  SOURCE_KIND as COGNITIVE_INVARIANTS_SOURCE_KIND,
-  build_cognitive_invariants_payload,
-  materialize_cognitive_invariants_map,
-)
 from .database import database_session, initialize_database
 from .engine import LibraryEngine
 from .errors import ServiceDependencyError
-from .forecast_technique_families import build_pack_payload
-from .lawvere_collection import (
-  SOURCE_KIND as LAWVERE_COLLECTION_SOURCE_KIND,
-  build_lawvere_collection_payload,
-  materialize_lawvere_collection_map,
-)
-from .website_topos import SOURCE_KIND as WEBSITE_TOPOS_SOURCE_KIND
-from .website_topos import load_reviewed_website_topos_export, materialize_website_topos_map
 from .schemas import (
   ActivityExportCommitRequest,
   ActivityExportFailureRequest,
@@ -51,17 +38,11 @@ from .schemas import (
   ActivitySignalOut,
   ActivitySignalSyncRequest,
   ActivitySignalsResponse,
-  CognitiveInvariantsMaterializeRequest,
-  CognitiveInvariantsMaterializeResponse,
   CitationAcquisitionCandidateReviewOut,
   CitationDownloadJobOut,
   CitationDownloadJobsResponse,
   CitationEntryOut,
   CitationEditionReviewOut,
-  DossierAssertionsResponse,
-  DossierSignalWindowsResponse,
-  DossierSyncRequest,
-  DossierSyncResponse,
   CitationManifestationReviewOut,
   CitationManualProcurementItemOut,
   CitationManualProcurementCreate,
@@ -87,15 +68,9 @@ from .schemas import (
   DocumentOut,
   FootnoteArtifactOut,
   FootnoteSpanOut,
-  ForecastTechniqueOut,
-  ForecastTechniquePackOut,
   ImportJobCreate,
   ImportJobOut,
   LoginRequest,
-  LawvereCollectionMaterializeRequest,
-  LawvereCollectionMaterializeResponse,
-  MarketAnalysisRequest,
-  MarketAnalysisResponse,
   MathFormulaLinkOut,
   MathFormulaOut,
   MathRegionOut,
@@ -106,13 +81,6 @@ from .schemas import (
   OperatorActionResponse,
   OperatorRuntimeStateOut,
   OperatorRuntimeStateRequest,
-  PharmaCycleRequest,
-  PharmaCycleResponse,
-  PharmaEventsResponse,
-  PharmaHomologationsResponse,
-  PharmaLeaderboardResponse,
-  PharmaSyncRequest,
-  PharmaSyncResponse,
   QueryRequest,
   QueryResponse,
   RegisterRequest,
@@ -135,8 +103,6 @@ from .schemas import (
   TrackedFileOut,
   TrackedFilesResponse,
   UserOut,
-  WebsiteToposMaterializeRequest,
-  WebsiteToposMaterializeResponse,
   WatchFolderCreate,
   WatchFolderOut,
 )
@@ -780,10 +746,6 @@ def to_citation_review_queue_detail_out(detail: dict) -> CitationReviewQueueDeta
     download_jobs=[to_citation_download_job_out(item) for item in detail.get("download_jobs", [])],
     manual_procurement_items=[to_citation_manual_procurement_item_out(item) for item in detail.get("manual_procurement_items", [])],
   )
-
-
-def to_forecast_technique_out(technique: dict) -> ForecastTechniqueOut:
-  return ForecastTechniqueOut(**technique)
 
 
 def to_watch_folder_out(folder: dict) -> WatchFolderOut:
@@ -1536,36 +1498,6 @@ def get_citation_entry(citation_id: str, current_user: Annotated[dict, Depends(g
   return to_citation_entry_out(payload)
 
 
-@app.get("/api/forecast-techniques")
-def list_forecast_techniques(current_user: Annotated[dict, Depends(get_current_user)], document_id: str | None = None, family_key: str | None = None):
-  with database_session(settings.sqlite_path) as connection:
-    engine.ensure_forecast_technique_materializations(connection, [document_id] if document_id else None, family_key=family_key)
-    items = [to_forecast_technique_out(item) for item in repository.list_forecast_techniques(connection, document_id=document_id, family_key=family_key)]
-  return {"items": items}
-
-
-@app.get("/api/forecast-techniques/{technique_id}", response_model=ForecastTechniqueOut)
-def get_forecast_technique(technique_id: str, current_user: Annotated[dict, Depends(get_current_user)], document_id: str | None = None, family_key: str | None = None):
-  with database_session(settings.sqlite_path) as connection:
-    engine.ensure_forecast_technique_materializations(connection, [document_id] if document_id else None, family_key=family_key)
-    payload = repository.get_forecast_technique_detail(connection, technique_id, document_id=document_id, family_key=family_key)
-  if payload is None:
-    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Forecast technique not found.")
-  return to_forecast_technique_out(payload)
-
-
-@app.get("/api/documents/{document_id}/forecast-technique-pack", response_model=ForecastTechniquePackOut)
-def get_document_forecast_technique_pack(document_id: str, current_user: Annotated[dict, Depends(get_current_user)], family_key: str | None = None):
-  with database_session(settings.sqlite_path) as connection:
-    document = repository.get_document_by_id(connection, document_id)
-    if document is None:
-      raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Document not found.")
-    engine.ensure_forecast_technique_materializations(connection, [document_id], family_key=family_key)
-    details = repository.list_document_forecast_technique_details(connection, document_id, family_key=family_key)
-    pack = build_pack_payload(document, details)
-  return ForecastTechniquePackOut(**pack)
-
-
 @app.get("/api/import-jobs")
 def list_import_jobs(current_user: Annotated[dict, Depends(get_current_user)]):
   with database_session(settings.sqlite_path) as connection:
@@ -1815,121 +1747,6 @@ def query_library(payload: QueryRequest, current_user: Annotated[dict, Depends(g
     raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail=error.to_detail()) from error
 
 
-@app.post("/api/market/analysis", response_model=MarketAnalysisResponse)
-def analyze_market(payload: MarketAnalysisRequest, current_user: Annotated[dict, Depends(get_current_user)]):
-  try:
-    result = engine.analyze_market(payload.model_dump())
-    return MarketAnalysisResponse(**result)
-  except ServiceDependencyError as error:
-    raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail=error.to_detail()) from error
-
-
-@app.post("/api/market/pharma/sync", response_model=PharmaSyncResponse)
-def sync_pharma_events(payload: PharmaSyncRequest, current_user: Annotated[dict, Depends(get_current_user)]):
-  try:
-    with database_session(settings.sqlite_path) as connection:
-      result = engine.sync_pharma_events(connection, payload.model_dump())
-    return PharmaSyncResponse(**result)
-  except ServiceDependencyError as error:
-    raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail=error.to_detail()) from error
-
-
-@app.post("/api/market/dossiers/sync", response_model=DossierSyncResponse)
-def sync_dossiers(payload: DossierSyncRequest, current_user: Annotated[dict, Depends(get_current_user)]):
-  try:
-    with database_session(settings.sqlite_path) as connection:
-      result = engine.sync_dossier_assertions(connection, payload.model_dump())
-    return DossierSyncResponse(**result)
-  except ServiceDependencyError as error:
-    raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail=error.to_detail()) from error
-
-
-@app.get("/api/market/dossiers/assertions", response_model=DossierAssertionsResponse)
-def list_dossier_assertions(
-  current_user: Annotated[dict, Depends(get_current_user)],
-  limit: int = 100,
-  dated_only: bool = False,
-):
-  with database_session(settings.sqlite_path) as connection:
-    result = engine.list_dossier_assertions(
-      connection,
-      {
-        "limit": limit,
-        "dated_only": dated_only,
-      },
-    )
-  return DossierAssertionsResponse(**result)
-
-
-@app.get("/api/market/dossiers/windows", response_model=DossierSignalWindowsResponse)
-def list_dossier_windows(
-  current_user: Annotated[dict, Depends(get_current_user)],
-  limit: int = 500,
-):
-  with database_session(settings.sqlite_path) as connection:
-    result = engine.list_dossier_signal_windows(
-      connection,
-      {
-        "limit": limit,
-      },
-    )
-  return DossierSignalWindowsResponse(**result)
-
-
-@app.get("/api/market/pharma/events", response_model=PharmaEventsResponse)
-def list_pharma_events(
-  current_user: Annotated[dict, Depends(get_current_user)],
-  symbols: str = "",
-  limit: int = 100,
-):
-  with database_session(settings.sqlite_path) as connection:
-    result = engine.list_pharma_events(
-      connection,
-      {
-        "symbols": [item.strip().upper() for item in symbols.split(",") if item.strip()],
-        "limit": limit,
-      },
-    )
-  return PharmaEventsResponse(**result)
-
-
-@app.post("/api/market/pharma/cycles", response_model=PharmaCycleResponse)
-def run_pharma_cycle(payload: PharmaCycleRequest, current_user: Annotated[dict, Depends(get_current_user)]):
-  try:
-    with database_session(settings.sqlite_path) as connection:
-      result = engine.run_pharma_cycle(connection, payload.model_dump(), user_id=current_user["id"])
-    return PharmaCycleResponse(**result)
-  except ServiceDependencyError as error:
-    raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail=error.to_detail()) from error
-
-
-@app.get("/api/market/pharma/cycles")
-def list_pharma_cycles(current_user: Annotated[dict, Depends(get_current_user)]):
-  with database_session(settings.sqlite_path) as connection:
-    return engine.list_pharma_cycles(connection)
-
-
-@app.get("/api/market/pharma/cycles/{cycle_id}")
-def get_pharma_cycle(cycle_id: str, current_user: Annotated[dict, Depends(get_current_user)]):
-  with database_session(settings.sqlite_path) as connection:
-    payload = engine.get_pharma_cycle(connection, cycle_id)
-  if payload is None:
-    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Pharma cycle not found.")
-  return payload
-
-
-@app.get("/api/market/pharma/leaderboard", response_model=PharmaLeaderboardResponse)
-def pharma_leaderboard(current_user: Annotated[dict, Depends(get_current_user)]):
-  with database_session(settings.sqlite_path) as connection:
-    return PharmaLeaderboardResponse(**engine.pharma_leaderboard(connection))
-
-
-@app.get("/api/market/pharma/homologations", response_model=PharmaHomologationsResponse)
-def pharma_homologations(current_user: Annotated[dict, Depends(get_current_user)]):
-  with database_session(settings.sqlite_path) as connection:
-    return PharmaHomologationsResponse(**engine.pharma_homologations(connection))
-
-
 @app.post("/api/research/query", response_model=ResearchQueryResponse)
 def research_query(payload: ResearchQueryRequest, current_user: Annotated[dict, Depends(get_current_user)]):
   try:
@@ -1985,102 +1802,6 @@ def create_research_map(payload: ResearchMapCreate, current_user: Annotated[dict
   with database_session(settings.sqlite_path) as connection:
     item = repository.create_research_map(connection, current_user["id"], payload.title, payload.description, payload.bundle_id, payload.layout)
   return to_research_map_out(item, pin_count=0)
-
-
-@app.get("/api/research/topos/website")
-def get_website_topos_export(current_user: Annotated[dict, Depends(get_current_user)]):
-  return load_reviewed_website_topos_export()
-
-
-@app.get("/api/research/lawvere")
-def get_lawvere_collection(current_user: Annotated[dict, Depends(get_current_user)]):
-  with database_session(settings.sqlite_path) as connection:
-    return build_lawvere_collection_payload(connection)
-
-
-@app.get("/api/research/lawvere/formalization-candidates")
-def get_lawvere_formalization_candidates(current_user: Annotated[dict, Depends(get_current_user)]):
-  with database_session(settings.sqlite_path) as connection:
-    payload = build_lawvere_collection_payload(connection)
-  return {
-    "items": payload.get("formalization_candidates", []),
-    "source_kind": LAWVERE_COLLECTION_SOURCE_KIND,
-    "source_ref": payload.get("source_ref") or "",
-  }
-
-
-@app.get("/api/research/cognitive-invariants")
-def get_cognitive_invariants_collection(current_user: Annotated[dict, Depends(get_current_user)]):
-  with database_session(settings.sqlite_path) as connection:
-    return build_cognitive_invariants_payload(connection)
-
-
-@app.get("/api/research/cognitive-invariants/formalization-candidates")
-def get_cognitive_invariants_formalization_candidates(current_user: Annotated[dict, Depends(get_current_user)]):
-  with database_session(settings.sqlite_path) as connection:
-    payload = build_cognitive_invariants_payload(connection)
-  return {
-    "items": payload.get("formalization_candidates", []),
-    "source_kind": COGNITIVE_INVARIANTS_SOURCE_KIND,
-    "source_ref": payload.get("source_ref") or "",
-  }
-
-
-@app.post("/api/research/maps/from-topos", response_model=WebsiteToposMaterializeResponse)
-def create_research_map_from_topos(payload: WebsiteToposMaterializeRequest, current_user: Annotated[dict, Depends(get_current_user)]):
-  export_payload = load_reviewed_website_topos_export()
-  with database_session(settings.sqlite_path) as connection:
-    item, pins_created = materialize_website_topos_map(
-      connection,
-      current_user["id"],
-      export_payload,
-      title=payload.title,
-      description=payload.description,
-    )
-  return WebsiteToposMaterializeResponse(
-    map=to_research_map_out(item, pin_count=pins_created),
-    pins_created=pins_created,
-    source_kind=WEBSITE_TOPOS_SOURCE_KIND,
-    source_ref=export_payload.get("source_ref") or "",
-  )
-
-
-@app.post("/api/research/maps/from-lawvere", response_model=LawvereCollectionMaterializeResponse)
-def create_research_map_from_lawvere(payload: LawvereCollectionMaterializeRequest, current_user: Annotated[dict, Depends(get_current_user)]):
-  with database_session(settings.sqlite_path) as connection:
-    export_payload = build_lawvere_collection_payload(connection)
-    item, pins_created = materialize_lawvere_collection_map(
-      connection,
-      current_user["id"],
-      export_payload,
-      title=payload.title,
-      description=payload.description,
-    )
-  return LawvereCollectionMaterializeResponse(
-    map=to_research_map_out(item, pin_count=pins_created),
-    pins_created=pins_created,
-    source_kind=LAWVERE_COLLECTION_SOURCE_KIND,
-    source_ref=export_payload.get("source_ref") or "",
-  )
-
-
-@app.post("/api/research/maps/from-cognitive-invariants", response_model=CognitiveInvariantsMaterializeResponse)
-def create_research_map_from_cognitive_invariants(payload: CognitiveInvariantsMaterializeRequest, current_user: Annotated[dict, Depends(get_current_user)]):
-  with database_session(settings.sqlite_path) as connection:
-    export_payload = build_cognitive_invariants_payload(connection)
-    item, pins_created = materialize_cognitive_invariants_map(
-      connection,
-      current_user["id"],
-      export_payload,
-      title=payload.title,
-      description=payload.description,
-    )
-  return CognitiveInvariantsMaterializeResponse(
-    map=to_research_map_out(item, pin_count=pins_created),
-    pins_created=pins_created,
-    source_kind=COGNITIVE_INVARIANTS_SOURCE_KIND,
-    source_ref=export_payload.get("source_ref") or "",
-  )
 
 
 @app.post("/api/research/maps/{map_id}/pins", response_model=ResearchMapPinOut)

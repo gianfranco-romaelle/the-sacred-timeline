@@ -4,9 +4,112 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sacred Timeline</title>
+    <style>
+      :root {
+        color: #2d241b;
+        background: #f6f0e7;
+        font-family:
+          Inter,
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+      }
+
+      body {
+        margin: 0;
+      }
+
+      .boot-panel {
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 32px;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(246, 240, 231, 0.94)),
+          #f6f0e7;
+        box-sizing: border-box;
+      }
+
+      .boot-panel__content {
+        width: min(680px, 100%);
+        border: 1px solid rgba(114, 88, 56, 0.18);
+        border-radius: 8px;
+        padding: 24px;
+        background: rgba(255, 255, 255, 0.78);
+        box-shadow: 0 18px 48px rgba(70, 48, 24, 0.08);
+      }
+
+      .boot-panel__eyebrow {
+        margin: 0;
+        color: #806240;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      .boot-panel__title {
+        margin: 10px 0 0;
+        font-size: 28px;
+        line-height: 1.15;
+      }
+
+      .boot-panel__status {
+        margin: 12px 0 0;
+        color: #5d5042;
+        font-size: 15px;
+        line-height: 1.55;
+      }
+
+      .boot-panel__bar {
+        height: 4px;
+        margin-top: 20px;
+        overflow: hidden;
+        border-radius: 999px;
+        background: rgba(128, 98, 64, 0.16);
+      }
+
+      .boot-panel__bar::before {
+        content: "";
+        display: block;
+        width: 40%;
+        height: 100%;
+        border-radius: inherit;
+        background: #806240;
+        animation: boot-progress 1.15s ease-in-out infinite alternate;
+      }
+
+      @keyframes boot-progress {
+        from {
+          transform: translateX(-55%);
+        }
+
+        to {
+          transform: translateX(205%);
+        }
+      }
+    </style>
+    <script>
+      console.info("[Sacred Timeline] index.html received; waiting for Vite client and React entry.");
+      window.__sacredTimelineBootStartedAt = performance.now();
+    </script>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <main class="boot-panel" aria-live="polite">
+        <section class="boot-panel__content">
+          <p class="boot-panel__eyebrow">Sacred Timeline</p>
+          <h1 class="boot-panel__title">Loading workspace</h1>
+          <p class="boot-panel__status">
+            The dev server is preparing the React module graph. The first boot can be slow while Vite transforms source files.
+          </p>
+          <div class="boot-panel__bar" aria-hidden="true"></div>
+        </section>
+      </main>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

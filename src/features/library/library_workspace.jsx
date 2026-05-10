@@ -31,7 +31,6 @@ import {
   enterDemoMode,
   fetchLawvereCollection,
   fetchLawvereFormalizationCandidates,
-  fetchWebsiteToposExport,
   fetchDossierAssertions,
   fetchDossierSignalWindows,
   fetchBackendBootStatus,
@@ -47,7 +46,6 @@ import {
   fetchSavedQueries,
   fetchSystemStatus,
   fetchWatchFolders,
-  materializeWebsiteToposMap,
   materializeLawvereMap,
   getLocalDemoSession,
   getSession,
@@ -136,7 +134,7 @@ const VAPNIK_SOURCE_PROFILE = {
 
 const VAPNIK_RUNTIME_PROMPTS = [
   "Explain Vapnik's capacity control in plain language and tell me what the interface should expose to reduce user error.",
-  "Translate empirical risk, generalization control, and structural risk into runtime guidance for HungryTopos and /library.",
+  "Translate empirical risk, generalization control, and structural risk into runtime guidance for /library.",
   "Build a trust protocol for when a research answer should be accepted, revised, or widened before acting on it.",
 ];
 
@@ -801,7 +799,7 @@ function LawvereCollectionCard({
           <div className="text-sm font-medium uppercase tracking-[0.14em] text-amber-700">Lawvere collection spine</div>
           <div className="mt-2 font-serif text-2xl text-stone-950">{collection?.collection_label || "Lawvere Collection"}</div>
           <div className="mt-2 text-sm leading-6 text-stone-700">
-            Whole-collection category-theory substrate for scoped retrieval, chronology, reviewed website intents, and Lean-facing formalization candidates.
+            Whole-collection category-theory substrate for scoped retrieval, chronology, reviewed website intents, and implementation candidates.
           </div>
         </div>
         <Badge className="rounded-full border border-amber-200 bg-white text-amber-800">
@@ -895,7 +893,7 @@ function LawvereCollectionCard({
                     type="button"
                     variant="outline"
                     className="rounded-full border-amber-300 bg-white text-amber-900 hover:bg-amber-100"
-                    onClick={() => onRunPrompt?.(`Run a Lawvere-scoped query for ${item.label} and connect it to the website topos.`)}
+                    onClick={() => onRunPrompt?.(`Run a Lawvere-scoped query for ${item.label} and connect it to the website architecture.`)}
                   >
                     Run scoped query
                   </Button>
@@ -910,13 +908,13 @@ function LawvereCollectionCard({
             {candidates.map((item) => (
               <div key={item.id} className="rounded-[16px] border border-stone-200 bg-stone-50/70 px-3 py-3">
                 <div className="font-medium text-stone-950">{item.label}</div>
-                <div className="mt-1 text-sm text-stone-600">{item.lean_module}</div>
+                <div className="mt-1 text-sm text-stone-600">{item.module || item.concept_family}</div>
                 <div className="mt-3">
                   <Button
                     type="button"
                     variant="outline"
                     className="rounded-full border-amber-300 bg-white text-amber-900 hover:bg-amber-100"
-                    onClick={() => onRunPrompt?.(`Open formalization candidates for ${item.label} and explain the Lean bridge.`)}
+                    onClick={() => onRunPrompt?.(`Open implementation candidates for ${item.label} and explain the bridge.`)}
                   >
                     Open formalization candidates
                   </Button>
@@ -966,7 +964,7 @@ function LawvereCollectionCard({
                       type="button"
                       variant="outline"
                       className="rounded-full border-amber-300 bg-white text-amber-900 hover:bg-amber-100"
-                      onClick={() => onRunPrompt?.(`Find Lean-facing formalization opportunities in ${item.title}.`)}
+                      onClick={() => onRunPrompt?.(`Find implementation opportunities in ${item.title}.`)}
                     >
                       Formalize from this work
                     </Button>
@@ -1640,10 +1638,6 @@ function LibraryWorkspaceInner({ session, onLogout, bootStatus }) {
   const [lawvereCollectionError, setLawvereCollectionError] = useState("");
   const [loadingLawvereCollection, setLoadingLawvereCollection] = useState(false);
   const [materializingLawvereCollection, setMaterializingLawvereCollection] = useState(false);
-  const [websiteToposExport, setWebsiteToposExport] = useState(null);
-  const [websiteToposError, setWebsiteToposError] = useState("");
-  const [loadingWebsiteTopos, setLoadingWebsiteTopos] = useState(false);
-  const [materializingWebsiteTopos, setMaterializingWebsiteTopos] = useState(false);
   const [activeLens, setActiveLens] = useState("triad");
   const [selectedEntity, setSelectedEntity] = useState(null);
   const [querying, setQuerying] = useState(false);
@@ -1854,25 +1848,6 @@ function LibraryWorkspaceInner({ session, onLogout, bootStatus }) {
     }
   }, [lawvereCollection, markDemoFromPayloads]);
 
-  const loadWebsiteToposData = useCallback(async ({ soft = false } = {}) => {
-    if (websiteToposExport && !soft) return websiteToposExport;
-    setLoadingWebsiteTopos(true);
-    setWebsiteToposError("");
-    try {
-      const nextWebsiteTopos = await fetchWebsiteToposExport();
-      startTransition(() => {
-        setWebsiteToposExport(nextWebsiteTopos);
-        markDemoFromPayloads(nextWebsiteTopos);
-      });
-      return nextWebsiteTopos;
-    } catch (error) {
-      setWebsiteToposError(error instanceof Error ? error.message : "Unable to load the reviewed website topos export.");
-      return null;
-    } finally {
-      setLoadingWebsiteTopos(false);
-    }
-  }, [markDemoFromPayloads, websiteToposExport]);
-
   const loadMarketData = useCallback(async ({ soft = false } = {}) => {
     if (loadedResources.market && !soft) return;
     setResourceLoading("market", true);
@@ -1973,12 +1948,6 @@ function LibraryWorkspaceInner({ session, onLogout, bootStatus }) {
     if (loading) return;
     void loadScreenData(screen);
   }, [loading, loadScreenData, screen]);
-
-  useEffect(() => {
-    if (screen !== "research") return;
-    if (websiteToposExport || loadingWebsiteTopos) return;
-    void loadWebsiteToposData();
-  }, [loadWebsiteToposData, loadingWebsiteTopos, screen, websiteToposExport]);
 
   useEffect(() => {
     setDemoMode(session?.mode === "demo");
@@ -2141,13 +2110,6 @@ function LibraryWorkspaceInner({ session, onLogout, bootStatus }) {
       return;
     }
 
-    if (prompt.mode === "topos") {
-      await Promise.all([loadSystemData(), loadResearchData(), loadWebsiteToposData({ soft: true })]);
-      await runFormalResearch(prompt.query);
-      setInstituteStatus("topos_routed");
-      return;
-    }
-
     if (prompt.mode === "lawvere") {
       await Promise.all([loadSystemData(), loadResearchData(), loadLawvereCollectionData({ soft: true })]);
       await runFormalResearch(prompt.query, { scope: LAWVERE_SCOPE });
@@ -2159,7 +2121,7 @@ function LibraryWorkspaceInner({ session, onLogout, bootStatus }) {
     await Promise.all([loadSystemData(), loadResearchData()]);
     await runFormalResearch(prompt.query);
     setInstituteStatus("routed");
-  }, [loadLawvereCollectionData, loadResearchData, loadSystemData, loadWebsiteToposData, runFormalResearch, runLibraryAsk]);
+  }, [loadLawvereCollectionData, loadResearchData, loadSystemData, runFormalResearch, runLibraryAsk]);
 
   async function handleQuerySubmit(event) {
     event.preventDefault();
@@ -2455,30 +2417,6 @@ function LibraryWorkspaceInner({ session, onLogout, bootStatus }) {
     }
   }
 
-  async function handleMaterializeWebsiteToposMap() {
-    setMaterializingWebsiteTopos(true);
-    setWebsiteToposError("");
-    try {
-      const result = await materializeWebsiteToposMap({
-        title: websiteToposExport?.research_map_seed?.title || "Website Topos - Canonical Shell",
-      });
-      if (result?.map) {
-        setResearchMaps((current) => {
-          const remaining = current.filter((item) => item.id !== result.map.id);
-          return [result.map, ...remaining];
-        });
-        setMapTitle(result.map.title || "Website Topos - Canonical Shell");
-        setResourceLoaded("research", true);
-        clearReleaseTimer("research");
-      }
-      markDemoFromPayloads(result);
-    } catch (error) {
-      setWebsiteToposError(error instanceof Error ? error.message : "Unable to materialize the website topos map.");
-    } finally {
-      setMaterializingWebsiteTopos(false);
-    }
-  }
-
   async function handlePinSelectedEntity() {
     if (!selectedEntity || !researchMaps.length) return;
     setPinningEntity(true);
@@ -2595,7 +2533,7 @@ function LibraryWorkspaceInner({ session, onLogout, bootStatus }) {
               <div className="rounded-[26px] border border-sky-200 bg-sky-50/90 px-5 py-4 text-sm text-sky-900 shadow-[0_20px_50px_rgba(65,137,211,0.10)]">
                 <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
                   <div className="max-w-4xl">
-                    <div className="font-semibold">HungryTopos institute intake</div>
+                    <div className="font-semibold">Library institute intake</div>
                     <div className="mt-1">
                       Routed from <span className="font-mono">{institutePrompt.sourcePathname}</span> into <span className="font-semibold">{institutePrompt.mode}</span> mode.
                     </div>
@@ -2604,7 +2542,7 @@ function LibraryWorkspaceInner({ session, onLogout, bootStatus }) {
                     </div>
                   </div>
                   <Badge className="w-fit rounded-full border border-sky-200 bg-white text-sky-800">
-                    {instituteStatus === "topos_routed" ? "Topos routed" : instituteStatus === "lawvere_routed" ? "Lawvere routed" : instituteStatus === "routed" ? "Routed" : "Routing"}
+                    {instituteStatus === "lawvere_routed" ? "Lawvere routed" : instituteStatus === "routed" ? "Routed" : "Routing"}
                   </Badge>
                 </div>
               </div>
@@ -2658,68 +2596,6 @@ function LibraryWorkspaceInner({ session, onLogout, bootStatus }) {
                       <div className="rounded-[24px] border border-stone-200 bg-stone-50/70 p-4">
                         <div className="text-sm font-medium uppercase tracking-[0.14em] text-stone-500">Bundle state</div>
                         <div className="mt-3 text-sm leading-6 text-stone-700">{researchResult ? `Loaded ${researchResult.mode} bundle ${researchResult.id}.` : "No research bundle loaded yet."}</div>
-                      </div>
-                      <div className="rounded-[24px] border border-sky-200 bg-sky-50/75 p-4">
-                        <div className="flex items-center justify-between gap-3">
-                          <div>
-                            <div className="text-sm font-medium uppercase tracking-[0.14em] text-sky-700">HungryTopos institute</div>
-                            <div className="mt-2 text-sm leading-6 text-sky-950">
-                              Keep the reviewed website topos and its research-map projection inside the library so global prompts can feed back into a canonical category-theory substrate.
-                            </div>
-                          </div>
-                          <Badge className="rounded-full border border-sky-200 bg-white text-sky-800">
-                            {loadingWebsiteTopos ? "Loading export" : websiteToposExport?.reviewed ? "Reviewed export" : "Waiting"}
-                          </Badge>
-                        </div>
-                        <div className="mt-4 grid gap-3 sm:grid-cols-3">
-                          <div className="rounded-[18px] border border-sky-200 bg-white/80 px-3 py-3">
-                            <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-sky-700">Objects</div>
-                            <div className="mt-2 text-sm text-sky-950">{websiteToposExport?.objects?.length || 0}</div>
-                          </div>
-                          <div className="rounded-[18px] border border-sky-200 bg-white/80 px-3 py-3">
-                            <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-sky-700">Morphisms</div>
-                            <div className="mt-2 text-sm text-sky-950">{websiteToposExport?.morphisms?.length || 0}</div>
-                          </div>
-                          <div className="rounded-[18px] border border-sky-200 bg-white/80 px-3 py-3">
-                            <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-sky-700">Cycle rank</div>
-                            <div className="mt-2 text-sm text-sky-950">{websiteToposExport?.cohomology_summary?.cycle_rank_estimate ?? "n/a"}</div>
-                          </div>
-                        </div>
-                        <div className="mt-4 flex flex-wrap gap-2">
-                          <Button
-                            type="button"
-                            variant="outline"
-                            className="rounded-full border-sky-300 bg-white text-sky-900 hover:bg-sky-100"
-                            onClick={() => void loadWebsiteToposData({ soft: true })}
-                            disabled={loadingWebsiteTopos}
-                          >
-                            {loadingWebsiteTopos ? "Refreshing export..." : "Refresh website topos"}
-                          </Button>
-                          <Button
-                            type="button"
-                            className="rounded-full bg-sky-900 text-white hover:bg-sky-800"
-                            onClick={() => void handleMaterializeWebsiteToposMap()}
-                            disabled={materializingWebsiteTopos}
-                          >
-                            {materializingWebsiteTopos ? "Materializing map..." : "Materialize website topos map"}
-                          </Button>
-                        </div>
-                        {websiteToposExport?.source_ref ? (
-                          <div className="mt-4 text-xs uppercase tracking-[0.14em] text-sky-700">
-                            Source ref: {websiteToposExport.source_ref}
-                          </div>
-                        ) : null}
-                        {lawvereCollection?.website_design_intents?.length ? (
-                          <div className="mt-4 rounded-[18px] border border-amber-200 bg-amber-50/70 px-4 py-4 text-sm text-amber-950">
-                            <div className="font-semibold uppercase tracking-[0.14em] text-amber-700">Lawvere design review</div>
-                            <div className="mt-3 space-y-2">
-                              {lawvereCollection.website_design_intents.slice(0, 2).map((intent) => (
-                                <div key={intent.id}>{intent.summary}</div>
-                              ))}
-                            </div>
-                          </div>
-                        ) : null}
-                        {websiteToposError ? <div className="mt-4 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">{websiteToposError}</div> : null}
                       </div>
                     </div>
                     <Suspense fallback={<div className="min-h-[420px] rounded-[28px] border border-dashed border-stone-300 bg-stone-50/80 p-8 text-sm text-stone-500">Loading the active research lens only when the formal workspace is open.</div>}>

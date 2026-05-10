@@ -443,7 +443,6 @@ export const useExplorerStore = create<ExplorerStoreState>()(
       name: "sacred-timeline-explorer-store",
       storage: createJSONStorage(getExplorerStorage),
       partialize: (state) => ({
-        activeView: state.activeView,
         selectedEntityId: state.selectedEntityId,
         selectedEntityType: state.selectedEntityType,
         selectedRelationId: state.selectedRelationId,
@@ -458,6 +457,7 @@ export const useExplorerStore = create<ExplorerStoreState>()(
         return {
           ...current,
           ...persistedState,
+          activeView: current.activeView,
           filters: {
             ...defaultExplorerFilters,
             ...(persistedState?.filters ?? {}),

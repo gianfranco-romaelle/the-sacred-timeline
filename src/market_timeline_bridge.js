@@ -79,9 +79,9 @@ export function projectPharmaCycleToTimelineItems(payload) {
       title: `Leader ${leader}`,
       startYear: year,
       category: "Pharma Cycle",
-      school: "HungryTopos",
+      school: "Sacred Timeline",
       description: `Rows ${Number(cycle?.dataset_summary?.row_count || 0)}, benchmark ${cleanText(cycle.benchmark_symbol || "XBI")}, candidates ${Number(cycle?.summary?.candidate_count || 0)}.`,
-      tags: ["pharma", "cycle", "hungrytopos", cleanText(cycle.benchmark_symbol || "XBI")],
+      tags: ["pharma", "cycle", "sacred-timeline", cleanText(cycle.benchmark_symbol || "XBI")],
       color: "#7c3aed",
     }),
   ];

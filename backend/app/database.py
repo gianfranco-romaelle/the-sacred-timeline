@@ -1181,7 +1181,7 @@ def _migration_007_activity_center(connection: sqlite3.Connection) -> None:
   connection.executescript(ACTIVITY_CENTER_SQL)
 
 
-def _migration_008_website_topos_maps(connection: sqlite3.Connection) -> None:
+def _migration_008_research_map_sources(connection: sqlite3.Connection) -> None:
   _ensure_column(connection, "research_maps", "source_kind", "TEXT")
   _ensure_column(connection, "research_maps", "source_ref", "TEXT")
   connection.execute(
@@ -1448,7 +1448,7 @@ MIGRATIONS: list[tuple[str, MigrationFn]] = [
   ("005_pharma_event_topos", _migration_005_pharma_event_topos),
   ("006_coreydigs_dossiers", _migration_006_coreydigs_dossiers),
   ("007_activity_center", _migration_007_activity_center),
-  ("008_website_topos_maps", _migration_008_website_topos_maps),
+  ("008_research_map_sources", _migration_008_research_map_sources),
   ("009_math_extraction", _migration_009_math_extraction),
   ("010_math_provider_metadata", _migration_010_math_provider_metadata),
   ("011_research_graph_materializations", _migration_011_research_graph_materializations),

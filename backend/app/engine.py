@@ -18,26 +18,17 @@ from .bootstrap import activate_vendor_path
 from .citation_runtime import extract_document_citations
 from .config import Settings
 from . import repository
-from .coreydigs_investigative_dossiers_runtime import build_dossier_context, build_dossier_sync_payload
 from .errors import ServiceDependencyError
-from .forecast_technique_families import list_family_providers, matching_family_providers
-from .lawvere_collection import dedupe_lawvere_sources, lawvere_scope_document_ids
 from .math_runtime import build_math_provider
-from .market_analysis_runtime import MarketGreenTriadAdapter
-from .pharma_event_topos_runtime import PharmaEventToposAdapter, build_homologation_state, summarize_leaderboard_rows
 from .providers import (
   FallbackReasoner,
   RemoteServiceError,
   _classify_remote_error,
-  build_dossier_news_provider,
   build_embedding_provider,
-  build_market_data_provider,
   build_ocr_provider,
-  build_pharma_news_provider,
   build_reasoner,
   build_reranker,
 )
-from .semeiotics import build_document_scaffolds, guess_document_metadata, normalize_label
 
 activate_vendor_path()
 
@@ -1057,12 +1048,7 @@ class LibraryEngine:
     self._reasoner = None
     self._ocr_provider = None
     self._math_provider = None
-    self._market_data_provider = None
-    self._pharma_news_provider = None
-    self._dossier_news_provider = None
     self._vector_index = None
-    self.market_green_triad = MarketGreenTriadAdapter()
-    self.pharma_event_topos = PharmaEventToposAdapter(settings.resolved_job_artifact_dir / "pharma-lab")
 
   @property
   def embedder(self):
@@ -1115,36 +1101,6 @@ class LibraryEngine:
     self._math_provider = value
 
   @property
-  def market_data_provider(self):
-    if self._market_data_provider is None:
-      self._market_data_provider = build_market_data_provider(self.settings)
-    return self._market_data_provider
-
-  @market_data_provider.setter
-  def market_data_provider(self, value):
-    self._market_data_provider = value
-
-  @property
-  def pharma_news_provider(self):
-    if self._pharma_news_provider is None:
-      self._pharma_news_provider = build_pharma_news_provider(self.settings)
-    return self._pharma_news_provider
-
-  @pharma_news_provider.setter
-  def pharma_news_provider(self, value):
-    self._pharma_news_provider = value
-
-  @property
-  def dossier_news_provider(self):
-    if self._dossier_news_provider is None:
-      self._dossier_news_provider = build_dossier_news_provider(self.settings)
-    return self._dossier_news_provider
-
-  @dossier_news_provider.setter
-  def dossier_news_provider(self, value):
-    self._dossier_news_provider = value
-
-  @property
   def vector_index(self):
     if self._vector_index is None:
       self._vector_index = VectorIndex(self.settings, self.embedder)
@@ -1189,26 +1145,6 @@ class LibraryEngine:
         "ready": self.math_provider.ready,
         "fallback": getattr(self.math_provider, "is_fallback", False),
         "detail": self.math_provider.check_ready()[1],
-      },
-      "market_data": {
-        "name": self.market_data_provider.name,
-        "ready": self.market_data_provider.ready,
-        "fallback": getattr(self.market_data_provider, "is_fallback", False),
-        "detail": self.market_data_provider.check_ready()[1],
-      },
-      "pharma_news": {
-        "name": self.pharma_news_provider.name,
-        "ready": self.pharma_news_provider.ready,
-        "fallback": getattr(self.pharma_news_provider, "is_fallback", False),
-        "detail": self.pharma_news_provider.check_ready()[1],
-        "sources": getattr(self.pharma_news_provider, "source_statuses", lambda: {})(),
-      },
-      "dossier_news": {
-        "name": self.dossier_news_provider.name,
-        "ready": self.dossier_news_provider.ready,
-        "fallback": getattr(self.dossier_news_provider, "is_fallback", False),
-        "detail": self.dossier_news_provider.check_ready()[1],
-        "sources": getattr(self.dossier_news_provider, "source_statuses", lambda: {})(),
       },
     }
 
@@ -1390,259 +1326,6 @@ class LibraryEngine:
         missing_services=missing,
       )
 
-  def analyze_market(self, request: Mapping[str, Any]) -> dict[str, Any]:
-    if not self.market_data_provider.ready:
-      raise ServiceDependencyError(
-        code="market_data_provider_unavailable",
-        message="The market data provider is not ready.",
-        missing_services=["market_data"],
-      )
-    try:
-      bundle = self.market_data_provider.fetch_market_bundle(
-        symbols=[str(symbol).strip().upper() for symbol in list(request.get("symbols", [])) if str(symbol).strip()],
-        benchmark_symbol=str(request.get("benchmark_symbol", "SPY")).strip().upper() or "SPY",
-        period=str(request.get("period", "6mo")),
-        interval=str(request.get("interval", "1d")),
-        max_expiries=int(request.get("max_expiries", 2)),
-      )
-    except ServiceDependencyError:
-      raise
-    except Exception as error:
-      raise ServiceDependencyError(
-        code="market_data_fetch_failed",
-        message=f"Unable to fetch market data: {error}",
-        missing_services=["market_data"],
-      ) from error
-    try:
-      return self.market_green_triad.analyze_bundle(bundle, request)
-    except ValueError as error:
-      raise ServiceDependencyError(
-        code="market_analysis_invalid_request",
-        message=str(error),
-        missing_services=[],
-      ) from error
-
-  def sync_pharma_events(self, connection, request: Mapping[str, Any]) -> dict[str, Any]:
-    if not self.pharma_news_provider.ready:
-      raise ServiceDependencyError(
-        code="pharma_news_provider_unavailable",
-        message="The pharma news provider is not ready.",
-        missing_services=["pharma_news"],
-      )
-    try:
-      payload = self.pharma_news_provider.sync_recent_events(
-        symbols=[str(symbol).strip().upper() for symbol in list(request.get("symbols", [])) if str(symbol).strip()],
-        limit=int(request.get("limit", 25)),
-      )
-    except Exception as error:
-      raise ServiceDependencyError(
-        code="pharma_news_sync_failed",
-        message=f"Unable to fetch pharma news: {error}",
-        missing_services=["pharma_news"],
-      ) from error
-    saved = repository.upsert_pharma_events(connection, payload.get("items", []))
-    return {
-      "provider": payload.get("provider", {}),
-      "summary": {
-        "stored_count": len(saved),
-        "source_count": len(payload.get("items", [])),
-      },
-      "items": saved,
-      "warnings": payload.get("warnings", []),
-    }
-
-  def list_pharma_events(self, connection, request: Mapping[str, Any]) -> dict[str, Any]:
-    items = repository.list_pharma_events(
-      connection,
-      symbols=[str(symbol).strip().upper() for symbol in list(request.get("symbols", [])) if str(symbol).strip()],
-      limit=int(request.get("limit", 100)),
-    )
-    return {"items": items, "count": len(items)}
-
-  def sync_dossier_assertions(self, connection, request: Mapping[str, Any] | None = None) -> dict[str, Any]:
-    if not self.dossier_news_provider.ready:
-      raise ServiceDependencyError(
-        code="dossier_news_provider_unavailable",
-        message="The dossier news provider is not ready.",
-        missing_services=["dossier_news"],
-      )
-    request = dict(request or {})
-    documents = repository.list_documents(connection)
-    nodes_by_document = {
-      str(document.get("id", "")): repository.list_nodes_by_document(connection, str(document.get("id", "")))
-      for document in documents
-    }
-    payload = build_dossier_sync_payload(
-      documents,
-      nodes_by_document,
-      document_limit=int(request.get("document_limit", 100)),
-      assertion_limit_per_document=int(request.get("assertion_limit_per_document", 24)),
-    )
-    stored_assertions = repository.replace_dossier_assertions(connection, payload.get("assertions", []))
-    stored_entities = repository.replace_dossier_entities(connection, payload.get("entities", []))
-    stored_windows = repository.replace_dossier_signal_windows(connection, payload.get("signal_windows", []))
-    return {
-      "provider": {
-        **payload.get("provider", {}),
-        "sources": getattr(self.dossier_news_provider, "source_statuses", lambda: {})(),
-      },
-      "summary": {
-        **dict(payload.get("summary", {})),
-        "stored_assertion_count": len(stored_assertions),
-        "stored_entity_count": len(stored_entities),
-        "stored_signal_window_count": len(stored_windows),
-      },
-      "assertions": stored_assertions,
-      "entities": stored_entities,
-      "signal_windows": stored_windows,
-      "warnings": payload.get("warnings", []),
-      "context": payload.get("context", {}),
-    }
-
-  def list_dossier_assertions(self, connection, request: Mapping[str, Any]) -> dict[str, Any]:
-    limit = int(request.get("limit", 100))
-    dated_only = bool(request.get("dated_only", False))
-    items = repository.list_dossier_assertions(connection, limit=limit, dated_only=dated_only)
-    return {"items": items, "count": len(items)}
-
-  def list_dossier_signal_windows(self, connection, request: Mapping[str, Any]) -> dict[str, Any]:
-    limit = int(request.get("limit", 500))
-    items = repository.list_dossier_signal_windows(connection, limit=limit)
-    return {"items": items, "count": len(items)}
-
-  def _pharma_artifact_dir(self, cycle_id: str) -> Path:
-    directory = self.settings.resolved_job_artifact_dir / "pharma-lab" / cycle_id
-    directory.mkdir(parents=True, exist_ok=True)
-    return directory
-
-  def _write_pharma_artifact(self, path: Path, payload: Mapping[str, Any]) -> None:
-    path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
-
-  def _refresh_pharma_homologations(self, connection) -> dict[str, dict[str, Any]]:
-    all_candidates = repository.list_pharma_cycle_candidates(connection)
-    grouped: dict[str, list[dict[str, Any]]] = {}
-    for row in all_candidates:
-      grouped.setdefault(str(row.get("candidate_key", "")), []).append(row)
-    statuses: dict[str, dict[str, Any]] = {}
-    for candidate_key, history in grouped.items():
-      ordered = sorted(history, key=lambda item: str(item.get("created_at", "")))
-      state = build_homologation_state(ordered)
-      latest = ordered[-1] if ordered else {}
-      stored = repository.upsert_pharma_homologation(
-        connection,
-        candidate_key=candidate_key,
-        family_key=str(latest.get("family_key", "")),
-        status=state["status"],
-        metrics=dict(latest.get("metrics", {})),
-        reasons=list(state.get("reasons", [])),
-        last_cycle_id=latest.get("cycle_id"),
-      )
-      statuses[candidate_key] = stored
-    return statuses
-
-  def run_pharma_cycle(self, connection, request: Mapping[str, Any], *, user_id: str | None) -> dict[str, Any]:
-    if not self.market_data_provider.ready:
-      raise ServiceDependencyError(
-        code="market_data_provider_unavailable",
-        message="The market data provider is not ready.",
-        missing_services=["market_data"],
-      )
-    events = repository.list_pharma_events(
-      connection,
-      symbols=[str(symbol).strip().upper() for symbol in list(request.get("symbols", [])) if str(symbol).strip()],
-      limit=int(request.get("max_events", 150)),
-    )
-    if not events:
-      synced = self.sync_pharma_events(
-        connection,
-        {
-          "symbols": [str(symbol).strip().upper() for symbol in list(request.get("symbols", [])) if str(symbol).strip()],
-          "limit": int(request.get("max_events", 150)),
-        },
-      )
-      events = list(synced.get("items", []))
-    dossier_context = None
-    if bool(request.get("include_dossier_signals", True)):
-      dossier_assertions = repository.list_dossier_assertions(connection, limit=2000, dated_only=False)
-      dossier_windows = repository.list_dossier_signal_windows(connection, limit=4000)
-      if not dossier_assertions and self.dossier_news_provider.ready:
-        synced_dossiers = self.sync_dossier_assertions(connection, {})
-        dossier_assertions = list(synced_dossiers.get("assertions", []))
-        dossier_windows = list(synced_dossiers.get("signal_windows", []))
-      if dossier_assertions or dossier_windows:
-        dossier_context = build_dossier_context(assertions=dossier_assertions, signal_windows=dossier_windows)
-    result = self.pharma_event_topos.run_cycle(
-      events,
-      market_provider=self.market_data_provider,
-      request=request,
-      dossier_context=dossier_context,
-    )
-    cycle = repository.create_pharma_cycle(
-      connection,
-      user_id=user_id,
-      benchmark_symbol=str(request.get("benchmark_symbol", "XBI")).strip().upper() or "XBI",
-      scope={"symbols": [str(symbol).strip().upper() for symbol in list(request.get("symbols", [])) if str(symbol).strip()]},
-      request=dict(request),
-      dataset_summary=dict(result.get("dataset", {}).get("summary", {})),
-      summary={
-        "candidate_count": len(result.get("candidates", [])),
-        "leader": result.get("leaderboard", [None])[0],
-      },
-      artifact_path=None,
-    )
-    cycle = repository.get_pharma_cycle(connection, cycle["id"]) or cycle
-    artifact_dir = self._pharma_artifact_dir(cycle["id"])
-    self._write_pharma_artifact(artifact_dir / "cycle.json", {"cycle": cycle, "dataset": result.get("dataset", {}), "warnings": result.get("warnings", [])})
-    candidates = []
-    for candidate in result.get("candidates", []):
-      artifact_name = re.sub(r"[^A-Za-z0-9_.-]+", "_", str(candidate.get("candidate_key", "candidate")))
-      artifact_path = artifact_dir / f"{artifact_name}.json"
-      self._write_pharma_artifact(artifact_path, candidate)
-      saved_candidate = dict(candidate)
-      saved_candidate["artifact_path"] = str(artifact_path)
-      candidates.append(saved_candidate)
-    repository.replace_pharma_cycle_candidates(connection, cycle["id"], candidates)
-    statuses = self._refresh_pharma_homologations(connection)
-    for candidate in candidates:
-      candidate["status"] = statuses.get(str(candidate.get("candidate_key", "")), {}).get("status", "candidate")
-    repository.replace_pharma_cycle_candidates(connection, cycle["id"], candidates)
-    leaderboard = []
-    for item in result.get("leaderboard", []):
-      next_item = dict(item)
-      next_item["status"] = statuses.get(str(item.get("candidate_key", "")), {}).get("status", item.get("status", "candidate"))
-      leaderboard.append(next_item)
-    return {"cycle": cycle, "candidates": candidates, "leaderboard": leaderboard, "warnings": result.get("warnings", [])}
-
-  def list_pharma_cycles(self, connection) -> dict[str, Any]:
-    items = repository.list_pharma_cycles(connection)
-    return {"items": items}
-
-  def get_pharma_cycle(self, connection, cycle_id: str) -> dict[str, Any] | None:
-    cycle = repository.get_pharma_cycle(connection, cycle_id)
-    if cycle is None:
-      return None
-    cycle["candidates"] = repository.list_pharma_cycle_candidates(connection, cycle_id)
-    return cycle
-
-  def pharma_leaderboard(self, connection) -> dict[str, Any]:
-    candidates = repository.list_pharma_cycle_candidates(connection)
-    latest_by_key: dict[str, dict[str, Any]] = {}
-    for candidate in candidates:
-      key = str(candidate.get("candidate_key", ""))
-      current = latest_by_key.get(key)
-      if current is None or str(candidate.get("created_at", "")) >= str(current.get("created_at", "")):
-        latest_by_key[key] = candidate
-    homologations = {item["candidate_key"]: item for item in repository.list_pharma_homologations(connection)}
-    rows = []
-    for candidate in latest_by_key.values():
-      row = dict(candidate)
-      row["status"] = homologations.get(candidate["candidate_key"], {}).get("status", candidate.get("status", "candidate"))
-      rows.append(row)
-    return {"items": summarize_leaderboard_rows(rows)}
-
-  def pharma_homologations(self, connection) -> dict[str, Any]:
-    return {"items": repository.list_pharma_homologations(connection)}
-
   def classify_query(self, query: str) -> str:
     lowered = query.lower()
     if any(token in lowered for token in ("compare", "across", "between", "synthesize")):
@@ -1773,14 +1456,13 @@ class LibraryEngine:
     sources: list[Path] = []
 
     for pass_index in range(1, max_passes + 1):
-      sources = dedupe_lawvere_sources(
-        self._discover_directory_sources(
-          source_path,
-          recursive=recursive,
-          include_extensions=include_extensions,
-          exclude_globs=exclude_globs,
-        )
+      discovered = self._discover_directory_sources(
+        source_path,
+        recursive=recursive,
+        include_extensions=include_extensions,
+        exclude_globs=exclude_globs,
       )
+      sources = list(dict.fromkeys(discovered))
       signature = tuple(str(path) for path in sources)
       passes.append({
         "pass": pass_index,
@@ -2145,7 +1827,7 @@ class LibraryEngine:
     chapters = group_chapters(sections)
     nodes: list[dict[str, Any]] = []
     book_summary = self.summarize_for_level(full_text, "book", 110)
-    document_metadata = guess_document_metadata(source_path, parsed["title"], parsed.get("metadata"))
+    document_metadata = dict(parsed.get("metadata") or {})
     extraction_modes = [page.get("metadata", {}).get("extraction_mode", "unknown") for page in parsed["pages"]]
     extraction_metadata = {
       "page_count": len(parsed["pages"]),
@@ -2374,7 +2056,7 @@ class LibraryEngine:
     }
     repository.replace_document_math_data(connection, document_id, prepared.get("math") or {}, page_node_ids=page_node_ids)
     repository.replace_document_citation_data(connection, document_id, prepared.get("citations") or {}, page_node_ids=page_node_ids)
-    repository.replace_document_research_scaffolds(connection, document_id, build_document_scaffolds(document, nodes))
+    repository.replace_document_research_scaffolds(connection, document_id, [])
     self._materialize_document_families(connection, document, nodes)
     document["warnings"] = parsed["warnings"]
     document["metadata"] = repository.json_loads(document["metadata_json"], {})
@@ -2422,7 +2104,7 @@ class LibraryEngine:
       nodes = repository.list_nodes_by_document(connection, document["id"])
       if not nodes:
         continue
-      repository.replace_document_research_scaffolds(connection, document["id"], build_document_scaffolds(document, nodes))
+      repository.replace_document_research_scaffolds(connection, document["id"], [])
 
   def ensure_research_scaffolds_for_documents(self, connection, document_ids: list[str] | None = None) -> dict[str, int]:
     documents = repository.list_documents(connection)
@@ -2436,59 +2118,13 @@ class LibraryEngine:
       nodes = repository.list_nodes_by_document(connection, document["id"])
       if not nodes:
         continue
-      repository.replace_document_research_scaffolds(connection, document["id"], build_document_scaffolds(document, nodes))
+      repository.replace_document_research_scaffolds(connection, document["id"], [])
       document_count += 1
       node_count += len(repository.list_research_graph_nodes(connection, document["id"]))
       edge_count += len(repository.list_research_graph_edges(connection, document["id"]))
     return {"documents": document_count, "graph_nodes": node_count, "graph_edges": edge_count}
 
-  def _materialize_document_families(self, connection, document: dict[str, Any], nodes: list[dict[str, Any]], family_key: str | None = None) -> dict[str, int]:
-    if family_key:
-      providers = matching_family_providers(document, family_key=family_key)
-      candidate_providers = [provider for provider in list_family_providers() if provider.family_key == family_key]
-    else:
-      providers = matching_family_providers(document, family_key=None)
-      candidate_providers = list_family_providers()
-    matched_keys = {provider.family_key for provider in providers}
-    empty_payload = {"techniques": [], "sources": [], "assets": [], "adaptations": [], "validation_cases": []}
-    for provider in candidate_providers:
-      if provider.family_key not in matched_keys:
-        repository.replace_document_technique_materialization(connection, document["id"], provider.family_key, empty_payload)
-    technique_count = 0
-    source_count = 0
-    for provider in providers:
-      payload = provider.materialize(document, nodes)
-      repository.replace_document_technique_materialization(connection, document["id"], provider.family_key, payload)
-      technique_count += len(payload.get("techniques", []))
-      source_count += len(payload.get("sources", []))
-    return {"documents": 1 if providers else 0, "techniques": technique_count, "sources": source_count}
-
-  def ensure_forecast_technique_materializations(self, connection, document_ids: list[str] | None = None, family_key: str | None = None) -> dict[str, int]:
-    documents = repository.list_documents(connection)
-    if document_ids:
-      target_ids = set(document_ids)
-      documents = [document for document in documents if document["id"] in target_ids]
-    document_count = 0
-    technique_count = 0
-    source_count = 0
-    for document in documents:
-      nodes = repository.list_nodes_by_document(connection, document["id"])
-      if not nodes:
-        continue
-      result = self._materialize_document_families(connection, document, nodes, family_key=family_key)
-      document_count += result["documents"]
-      technique_count += result["techniques"]
-      source_count += result["sources"]
-    return {"documents": document_count, "techniques": technique_count, "sources": source_count}
-
-  def ensure_polynomial_technique_materializations(self, connection, document_ids: list[str] | None = None) -> dict[str, int]:
-    return self.ensure_forecast_technique_materializations(connection, document_ids=document_ids, family_key="polynomial")
-
   def _resolve_scoped_document_ids(self, connection, scope: dict[str, Any] | None = None) -> list[str] | None:
-    scope = dict(scope or {})
-    lawvere_ids = lawvere_scope_document_ids(connection, scope)
-    if lawvere_ids is not None:
-      return lawvere_ids
     return None
 
   def _retrieve_query_material(self, connection, query_text: str, scope: dict[str, Any] | None = None) -> dict[str, Any]:
@@ -2915,8 +2551,8 @@ class LibraryEngine:
       target_ids = target_category.get("payload", {}).get("object_ids", [])
       mapping_pairs = []
       for source_object_id in source_ids:
-        source_label = normalize_label(object_lookup.get(source_object_id, {}).get("label", ""))
-        best_match = next((target_object_id for target_object_id in target_ids if normalize_label(object_lookup.get(target_object_id, {}).get("label", "")) == source_label), None)
+        source_label = str(object_lookup.get(source_object_id, {}).get("label", "")).strip().lower()
+        best_match = next((target_object_id for target_object_id in target_ids if str(object_lookup.get(target_object_id, {}).get("label", "")).strip().lower() == source_label), None)
         if best_match is None and target_ids:
           best_match = target_ids[min(len(mapping_pairs), len(target_ids) - 1)]
         if best_match:

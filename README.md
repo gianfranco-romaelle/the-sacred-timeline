@@ -161,7 +161,8 @@ src/
 │   ├── admin-store.ts            Admin mode state
 │   └── selectors.ts              Filter signal counts, hasActiveFilters, hasSharedContext
 ├── features/
-│   ├── river/                    River of Time view
+│   ├── lifelines/                River of Time (lifespan canvas view)
+│   ├── river/                    Legacy era-band stage (not in use)
 │   ├── constellation/            Constellation graph view
 │   ├── atlas/                    Geographic Atlas view
 │   ├── face-atlas/               Portrait gallery view
@@ -231,22 +232,27 @@ The outer shell wraps all views with a consistent control surface:
 
 ### 4.2 River of Time
 
-The default and primary chronological view.
+The default and primary chronological view. Implemented as a **canvas-based lifespan bar chart** (`src/features/lifelines/`) that renders the birth-to-death span of every Person (and dated entity) as a horizontal bar on a continuous year axis.
 
-**Grouping modes:**
-- **Era** — broad named historical eras (Antiquity, Medieval, Early Modern, Modern)
-- **Century** — entities bucketed by century using `Math.floor((|year|-1)/100)+1`
-- **Tradition** — one horizontal lane per Tradition; entities positioned by primary year (River Lane Functor)
-- **Editorial** — Calculus Stage grouping; Quantum Stage grouping also available
+**Canvas interaction:**
+- **Zoom** — scroll or pinch to zoom between 0.08 and 20 px/year; default scale is 0.5 px/year
+- **Pan** — click-drag to scroll the time axis; a **minimap** in the corner shows position within the full span
+- **Bar selection** — clicking a bar selects the entity and syncs the Inspector and all other views
 
-**Item cards** show label, entity type, date, domain color, context reason badge, portrait thumbnail when available, and relation/citation counts.
+**Lifespan bars:**
+- Span from `birth_year` to `death_year`; open-ended bars extend to the present year for living entities or when death date is unknown
+- Approximate dates parsed from `lifespan_raw` strings (e.g. `"c. 170–c. 270"`)
+- Portrait thumbnail overlaid when available; bars carry the entity name label
+- Invalid or implausible lifespans (inverted dates, modern entries > 140 years) are silently dropped
 
-**Hover card** surfaces a quick summary without requiring full selection.
+**Grouping:**
+- Primary grouping by **Calculus Stage** (`calculus_number`) — each stage renders as a labelled swim-lane section
+- Alternative grouping by **field** — collapses all stages into domain-level bands
+- Within each group, bars are packed into lanes by a lane-packing algorithm that minimizes vertical space while preventing overlap
 
-**Editorial mode** recolors cards by stage, shows stage labels, and can re-order by editorial rather than historical chronology.
+**Density modes** — compact / comfortable / spacious bar height presets.
 
-![River of Time — Era mode](docs/screenshots/river-era.png)
-![River of Time — Tradition Lane mode](docs/screenshots/river-lanes.png)
+![River of Time](docs/screenshots/river-lifelines.png)
 
 ---
 
@@ -425,7 +431,7 @@ Toggled via `AdminModeToggle`. When active:
 
 ## 8. Test Coverage
 
-**264 tests · 17 test files · TypeScript clean** (as of 2026-05-09)
+**306 tests · 23 test files · TypeScript clean** (as of 2026-05-10)
 
 | Module | Tests |
 |--------|-------|
@@ -446,6 +452,9 @@ Toggled via `AdminModeToggle`. When active:
 | `src/data/__tests__/genesis-school-traditions.test.ts` | School tradition vocabulary |
 | `src/data/__tests__/genesis-tag-vocabulary.test.ts` | Cognitive & math tag vocabulary |
 | `src/features/timeline/` (legacy) | timeline_filters, timeline_projection |
+| `src/features/lifelines/lifespan-adapter.ts` | buildLifelinesProjection: null birth_year drop, inverted date drop, modern lifespan cap, open-ended bars, lifespan_raw parsing, field/calculus grouping, group sort, lane assignment, global bounds |
+| `src/features/lifelines/lane-packing.ts` | lane assignment algorithm, overlap detection, greedy packing |
+| `src/features/lifelines/` (performance) | projection performance under large entry sets |
 
 **Known boundary conditions:**
 - `getCenturyLabel`: year 1200 = 12th century (last year); year 1201 = 13th century (first year). Formula: `Math.floor((|year|−1)/100)+1`. Always appends "th" (not ordinal-aware).
@@ -498,9 +507,6 @@ npm run typecheck
 
 # Rebuild historical snapshot
 npm run ingest:historical
-
-# Lean API server
-npm run lean:api
 ```
 
 **Dev server**: launched via the VS Code **Run & Debug** menu → available at `http://127.0.0.1:4173`.
@@ -522,7 +528,6 @@ Path alias `@` resolves to `./src/` in both Vite and Vitest configs.
 
 ### Near-term features
 
-- [ ] **Lifelines view** — a planned sixth view (`src/features/lifelines/lifespan-adapter.ts` referenced but not yet scaffolded) rendering overlapping lifespan arcs for a filtered cohort of Persons; adapts `buildLifelinesProjection`
 - [ ] **Library / Research Workspace** — the existing `src/features/library/` module (JSX) needs TypeScript migration, seed integration, and promotion to a navigation tab
 - [ ] **Activity Center** — `src/features/activity/` needs wiring into the shell and real data
 - [ ] **Scriptorium exhibits editor** — full multi-section exhibit authoring with rich text, pinned entities, and media
@@ -547,7 +552,6 @@ Path alias `@` resolves to `./src/` in both Vite and Vitest configs.
 
 ### Infrastructure
 
-- [ ] **Backend lean API** — `server/run-lean-api.ts` scaffolded; needs route implementation for snapshot serving, embedding writes, and Drive sync
 - [ ] **Saved scope sharing** — serialize and share a saved scope as a URL / deep-link
 - [ ] **Command palette commands** — bind filter presets, view switches, and editorial stage jumps to the CommandPalette
 - [ ] **Keyboard navigation** — River item cards, Constellation nodes, Face Atlas cards all navigable by keyboard

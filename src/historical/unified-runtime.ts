@@ -542,12 +542,17 @@ export function useUnifiedHistoricalRuntime(): UnifiedHistoricalRuntimeData {
 
     const loadSnapshot = async () => {
       try {
+        console.info("[Sacred Timeline] Loading historical snapshot...");
+        const snapshotStartedAt = performance.now();
         const response = await fetch(SNAPSHOT_URL, { cache: "no-store" });
         if (!response.ok) {
           throw new Error(`Historical snapshot unavailable (${response.status})`);
         }
 
         const nextSnapshot = (await response.json()) as HistoricalEntityGraphSnapshot;
+        console.info(
+          `[Sacred Timeline] Historical snapshot parsed in ${Math.round(performance.now() - snapshotStartedAt)}ms.`,
+        );
         if (isMounted) {
           setSnapshot(nextSnapshot);
           setError(undefined);

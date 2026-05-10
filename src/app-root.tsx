@@ -3,10 +3,12 @@ import "./app-root.css";
 import { stripBasePath, withBasePath } from "@/lib/base-path";
 
 const TimelineWorkspace = lazy(async () => {
+  console.info("[Sacred Timeline] Loading timeline workspace route modules...");
   const [{ AppShell }, { HistoricalRuntimeProvider }] = await Promise.all([
     import("@/components/shell/app-shell"),
     import("@/historical/runtime-context"),
   ]);
+  console.info("[Sacred Timeline] Timeline workspace route modules loaded.");
 
   return {
     default: function TimelineWorkspaceRoute() {

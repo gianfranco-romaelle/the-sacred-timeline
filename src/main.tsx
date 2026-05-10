@@ -3,6 +3,15 @@ import ReactDOM from "react-dom/client";
 import AppRoot from "./app-root";
 import "./index.css";
 
+const bootStartedAt =
+  typeof window !== "undefined" && typeof window.__sacredTimelineBootStartedAt === "number"
+    ? window.__sacredTimelineBootStartedAt
+    : performance.now();
+
+console.info(
+  `[Sacred Timeline] React entry loaded after ${Math.round(performance.now() - bootStartedAt)}ms.`,
+);
+
 type RootErrorBoundaryState = {
   error?: Error;
 };
@@ -75,4 +84,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <AppRoot />
     </RootErrorBoundary>
   </React.StrictMode>,
+);
+
+console.info(
+  `[Sacred Timeline] React render scheduled after ${Math.round(performance.now() - bootStartedAt)}ms.`,
 );

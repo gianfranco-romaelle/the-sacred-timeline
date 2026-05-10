@@ -1053,18 +1053,6 @@ class ResearchMapPinOut(BaseModel):
 
 
 # System and activity-center diagnostics -----------------------------------------
-class WebsiteToposMaterializeRequest(BaseModel):
-  title: str | None = Field(default=None, min_length=1, max_length=160)
-  description: str | None = None
-
-
-class WebsiteToposMaterializeResponse(BaseModel):
-  map: ResearchMapOut
-  pins_created: int
-  source_kind: str
-  source_ref: str
-
-
 class LawvereCollectionMaterializeRequest(BaseModel):
   title: str | None = Field(default=None, max_length=160)
   description: str | None = Field(default=None, max_length=500)
