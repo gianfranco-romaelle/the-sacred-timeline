@@ -107,7 +107,7 @@ export interface DriveTrialData {
   semantic?: DriveSemanticPayload;
 }
 
-const DRIVE_DOMAIN_ID = "domain_drive_library" as DomainId;
+const DRIVE_DOMAIN_ID = "domain_scriptorium" as DomainId;
 
 const slugify = (value: string) =>
   value
@@ -720,9 +720,9 @@ const ensureDriveDomain = (domains: DomainDefinition[]) =>
         ...domains,
         {
           id: DRIVE_DOMAIN_ID,
-          slug: "drive-library",
-          label: "Drive Library",
-          description: "Imported Gemini trial index and semantic embedding records.",
+          slug: "scriptorium",
+          label: "Scriptorium",
+          description: "Entities and edges imported via the Scriptorium Drive pipeline (Gemini trial index and semantic embedding records).",
           kind: "history" as const,
           colorToken: "teal",
         },

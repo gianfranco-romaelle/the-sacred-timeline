@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "launch": "node scripts/launch-site.mjs",
     "build": "vite build",
     "ingest:historical": "tsx scripts/build-historical-snapshot.ts",
     "typecheck": "tsc --noEmit",

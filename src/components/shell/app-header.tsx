@@ -15,8 +15,17 @@ export function AppHeader() {
       transition={{ duration: 0.45, ease: "easeOut" }}
     >
       <div className="app-header__intro">
-        <p className="eyebrow">Sacred Timeline Project</p>
-        <h1>History of science and religion as one coordinated knowledge space.</h1>
+        <div className="app-header__brand">
+          <img
+            className="app-header__logo"
+            src="/geist-quest-logo.jpg"
+            alt="Geist Quest"
+          />
+          <div>
+            <h1>Geist Quest Presents: The&nbsp;Sacred&nbsp;Timeline</h1>
+          </div>
+        </div>
+        <p className="app-header__subtitle">History of science and religion as one coordinated knowledge space.</p>
         <p className="app-header__summary">
           A coordinated scholarly graph for historical ontology, semantic evidence, and curated
           projection work.

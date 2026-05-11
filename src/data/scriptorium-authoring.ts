@@ -26,7 +26,7 @@ export const defaultScriptoriumInstagramReferences: InstagramPostReference[] = [
 export const defaultScriptoriumExhibits: ScriptoriumExhibit[] = [
   {
     id: "exhibit_drive_library_orientation",
-    title: "Drive Library Orientation",
+    title: "Scriptorium Orientation",
     description:
       "A starter exhibit for arranging imported texts, schools, people, and Instagram references into a curator-approved research path.",
     reviewState: "approved",
