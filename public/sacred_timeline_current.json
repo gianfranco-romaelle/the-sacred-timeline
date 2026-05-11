@@ -9541,17 +9541,6 @@
         "portrait_url":  null
     },
     {
-        "name":  "The \"Puritan\" Generation (",
-        "birth_year":  1588,
-        "death_year":  1617,
-        "lifespan_raw":  "1588 - 1617",
-        "country":  null,
-        "field":  null,
-        "calculus_number":  1,
-        "calculus_name":  "First",
-        "portrait_url":  null
-    },
-    {
         "name":  "Girard Desargues",
         "birth_year":  1591,
         "death_year":  1661,
@@ -9640,17 +9629,6 @@
         "portrait_url":  null
     },
     {
-        "name":  "The \"Enlightenment\" Generation (",
-        "birth_year":  1674,
-        "death_year":  1700,
-        "lifespan_raw":  "1674-1700",
-        "country":  null,
-        "field":  null,
-        "calculus_number":  1,
-        "calculus_name":  "First",
-        "portrait_url":  null
-    },
-    {
         "name":  "Stephen Hales",
         "birth_year":  1677,
         "death_year":  1761,
@@ -9699,17 +9677,6 @@
         "birth_year":  1700,
         "death_year":  1770,
         "lifespan_raw":  "1700 - 1770",
-        "country":  null,
-        "field":  null,
-        "calculus_number":  1,
-        "calculus_name":  "First",
-        "portrait_url":  null
-    },
-    {
-        "name":  "The \"Awakening\" Generation (",
-        "birth_year":  1701,
-        "death_year":  1723,
-        "lifespan_raw":  "1701-1723",
         "country":  null,
         "field":  null,
         "calculus_number":  1,
@@ -9769,17 +9736,6 @@
         "field":  null,
         "calculus_number":  1,
         "calculus_name":  "First",
-        "portrait_url":  null
-    },
-    {
-        "name":  "The \"Liberty\" Generation (",
-        "birth_year":  1724,
-        "death_year":  1741,
-        "lifespan_raw":  "1724-1741",
-        "country":  null,
-        "field":  null,
-        "calculus_number":  2,
-        "calculus_name":  "Second",
         "portrait_url":  null
     },
     {
@@ -10018,17 +9974,6 @@
         "birth_year":  1766,
         "death_year":  1844,
         "lifespan_raw":  "1766-1844",
-        "country":  null,
-        "field":  null,
-        "calculus_number":  2,
-        "calculus_name":  "Second",
-        "portrait_url":  null
-    },
-    {
-        "name":  "The \"Compromise\" Generation (",
-        "birth_year":  1767,
-        "death_year":  1791,
-        "lifespan_raw":  "1767-1791",
         "country":  null,
         "field":  null,
         "calculus_number":  2,
@@ -10960,17 +10905,6 @@
         "portrait_url":  null
     },
     {
-        "name":  "The \"Gilded\" Generation (",
-        "birth_year":  1822,
-        "death_year":  1842,
-        "lifespan_raw":  "1822-1842",
-        "country":  null,
-        "field":  null,
-        "calculus_number":  3,
-        "calculus_name":  "Third",
-        "portrait_url":  null
-    },
-    {
         "name":  "Rudolf Clausius",
         "birth_year":  1822,
         "death_year":  1888,
@@ -11404,17 +11338,6 @@
         "birth_year":  1840,
         "death_year":  1930,
         "lifespan_raw":  "1840 - 1930",
-        "country":  null,
-        "field":  null,
-        "calculus_number":  3,
-        "calculus_name":  "Third",
-        "portrait_url":  null
-    },
-    {
-        "name":  "The \"Progressive\" Generation (",
-        "birth_year":  1843,
-        "death_year":  1859,
-        "lifespan_raw":  "1843-1859",
         "country":  null,
         "field":  null,
         "calculus_number":  3,
@@ -13369,17 +13292,6 @@
         "portrait_url":  null
     },
     {
-        "name":  "The \"Silent\" Generation (",
-        "birth_year":  1925,
-        "death_year":  1942,
-        "lifespan_raw":  "1925-1942",
-        "country":  null,
-        "field":  null,
-        "calculus_number":  5,
-        "calculus_name":  "Fifth",
-        "portrait_url":  null
-    },
-    {
         "name":  "Alexander Shulgin",
         "birth_year":  1925,
         "death_year":  2014,
@@ -13516,17 +13428,6 @@
         "birth_year":  1942,
         "death_year":  2026,
         "lifespan_raw":  "1942 - Present",
-        "country":  null,
-        "field":  null,
-        "calculus_number":  5,
-        "calculus_name":  "Fifth",
-        "portrait_url":  null
-    },
-    {
-        "name":  "The Boomers (",
-        "birth_year":  1943,
-        "death_year":  1960,
-        "lifespan_raw":  "1943-1960",
         "country":  null,
         "field":  null,
         "calculus_number":  5,
@@ -21497,17 +21398,6 @@
         "birth_year":  1874,
         "death_year":  1936,
         "lifespan_raw":  "1874–1936",
-        "country":  null,
-        "field":  null,
-        "calculus_number":  4,
-        "calculus_name":  "Fourth",
-        "portrait_url":  null
-    },
-    {
-        "name":  "Carl Naeslund Institute",
-        "birth_year":  1892,
-        "death_year":  1946,
-        "lifespan_raw":  "1892–1946",
         "country":  null,
         "field":  null,
         "calculus_number":  4,
@@ -35005,6 +34895,317 @@
         "field":  "Physics/Cosmology",
         "calculus_number":  5,
         "calculus_name":  "Fifth",
+        "portrait_url":  null
+    },
+    {
+        "name":  "Virgil",
+        "birth_year":  -70,
+        "death_year":  -19,
+        "lifespan_raw":  "70 BC - 19 BC",
+        "country":  "Rome",
+        "field":  "Poetry",
+        "calculus_number":  0,
+        "calculus_name":  "Zeroth",
+        "portrait_url":  null
+    },
+    {
+        "name":  "Dante Alighieri",
+        "birth_year":  1265,
+        "death_year":  1321,
+        "lifespan_raw":  "c. 1265 - 1321",
+        "country":  "Italy",
+        "field":  "Poetry",
+        "calculus_number":  0,
+        "calculus_name":  "Zeroth",
+        "portrait_url":  null
+    },
+    {
+        "name":  "Ralph Waldo Emerson",
+        "birth_year":  1803,
+        "death_year":  1882,
+        "lifespan_raw":  "1803 - 1882",
+        "country":  "United States",
+        "field":  "Philosophy, Letters",
+        "calculus_number":  3,
+        "calculus_name":  "Third",
+        "portrait_url":  null
+    },
+    {
+        "name":  "Karl Heinrich Ulrichs",
+        "birth_year":  1825,
+        "death_year":  1895,
+        "lifespan_raw":  "1825 - 1895",
+        "country":  "Germany",
+        "field":  "Law, Rights Advocacy",
+        "calculus_number":  3,
+        "calculus_name":  "Third",
+        "portrait_url":  null
+    },
+    {
+        "name":  "James Mills Peirce",
+        "birth_year":  1834,
+        "death_year":  1906,
+        "lifespan_raw":  "1834 - 1906",
+        "country":  "United States",
+        "field":  "Mathematics",
+        "calculus_number":  3,
+        "calculus_name":  "Third",
+        "portrait_url":  null
+    },
+    {
+        "name":  "Eugen Steinach",
+        "birth_year":  1861,
+        "death_year":  1944,
+        "lifespan_raw":  "1861 - 1944",
+        "country":  "Austria",
+        "field":  "Physiology, Endocrinology",
+        "calculus_number":  3,
+        "calculus_name":  "Third",
+        "portrait_url":  null
+    },
+    {
+        "name":  "Albert Moll",
+        "birth_year":  1862,
+        "death_year":  1939,
+        "lifespan_raw":  "1862 - 1939",
+        "country":  "Germany",
+        "field":  "Psychiatry, Sexology",
+        "calculus_number":  3,
+        "calculus_name":  "Third",
+        "portrait_url":  null
+    },
+    {
+        "name":  "Havelock Ellis",
+        "birth_year":  1859,
+        "death_year":  1939,
+        "lifespan_raw":  "1859 - 1939",
+        "country":  "United Kingdom",
+        "field":  "Sexology, Medicine",
+        "calculus_number":  3,
+        "calculus_name":  "Third",
+        "portrait_url":  null
+    },
+    {
+        "name":  "Magnus Hirschfeld",
+        "birth_year":  1868,
+        "death_year":  1935,
+        "lifespan_raw":  "1868 - 1935",
+        "country":  "Germany",
+        "field":  "Medicine, Sexology",
+        "calculus_number":  4,
+        "calculus_name":  "Fourth",
+        "portrait_url":  null
+    },
+    {
+        "name":  "Helene Stöcker",
+        "birth_year":  1869,
+        "death_year":  1943,
+        "lifespan_raw":  "1869 - 1943",
+        "country":  "Germany",
+        "field":  "Feminism, Social Reform",
+        "calculus_number":  4,
+        "calculus_name":  "Fourth",
+        "portrait_url":  null
+    },
+    {
+        "name":  "Iwan Bloch",
+        "birth_year":  1872,
+        "death_year":  1922,
+        "lifespan_raw":  "1872 - 1922",
+        "country":  "Germany",
+        "field":  "Medicine, Sexology",
+        "calculus_number":  4,
+        "calculus_name":  "Fourth",
+        "portrait_url":  null
+    },
+    {
+        "name":  "James Joyce",
+        "birth_year":  1882,
+        "death_year":  1941,
+        "lifespan_raw":  "1882 - 1941",
+        "country":  "Ireland",
+        "field":  "Literature",
+        "calculus_number":  4,
+        "calculus_name":  "Fourth",
+        "portrait_url":  null
+    },
+    {
+        "name":  "Franz Kafka",
+        "birth_year":  1883,
+        "death_year":  1924,
+        "lifespan_raw":  "1883 - 1924",
+        "country":  "Czech Republic",
+        "field":  "Literature",
+        "calculus_number":  4,
+        "calculus_name":  "Fourth",
+        "portrait_url":  null
+    },
+    {
+        "name":  "Kurt Hiller",
+        "birth_year":  1885,
+        "death_year":  1972,
+        "lifespan_raw":  "1885 - 1972",
+        "country":  "Germany",
+        "field":  "Activism, Letters",
+        "calculus_number":  4,
+        "calculus_name":  "Fourth",
+        "portrait_url":  null
+    },
+    {
+        "name":  "T.S. Eliot",
+        "birth_year":  1888,
+        "death_year":  1965,
+        "lifespan_raw":  "1888 - 1965",
+        "country":  "United States",
+        "field":  "Poetry, Criticism",
+        "calculus_number":  4,
+        "calculus_name":  "Fourth",
+        "portrait_url":  null
+    },
+    {
+        "name":  "E.E. Cummings",
+        "birth_year":  1894,
+        "death_year":  1962,
+        "lifespan_raw":  "1894 - 1962",
+        "country":  "United States",
+        "field":  "Poetry",
+        "calculus_number":  4,
+        "calculus_name":  "Fourth",
+        "portrait_url":  null
+    },
+    {
+        "name":  "Max Hodann",
+        "birth_year":  1894,
+        "death_year":  1946,
+        "lifespan_raw":  "1894 - 1946",
+        "country":  "Germany",
+        "field":  "Medicine, Sex Education",
+        "calculus_number":  4,
+        "calculus_name":  "Fourth",
+        "portrait_url":  null
+    },
+    {
+        "name":  "Charlotte Wolff",
+        "birth_year":  1897,
+        "death_year":  1986,
+        "lifespan_raw":  "1897 - 1986",
+        "country":  "Germany",
+        "field":  "Medicine, Psychology",
+        "calculus_number":  4,
+        "calculus_name":  "Fourth",
+        "portrait_url":  null
+    },
+    {
+        "name":  "Charles Bukowski",
+        "birth_year":  1920,
+        "death_year":  1994,
+        "lifespan_raw":  "1920 - 1994",
+        "country":  "United States",
+        "field":  "Literature",
+        "calculus_number":  5,
+        "calculus_name":  "Fifth",
+        "portrait_url":  null
+    },
+    {
+        "name":  "Gabriel García Márquez",
+        "birth_year":  1927,
+        "death_year":  2014,
+        "lifespan_raw":  "1927 - 2014",
+        "country":  "Colombia",
+        "field":  "Literature",
+        "calculus_number":  5,
+        "calculus_name":  "Fifth",
+        "portrait_url":  null
+    },
+    {
+        "name":  "Albert Calmette",
+        "birth_year":  1863,
+        "death_year":  1933,
+        "lifespan_raw":  "1863 - 1933",
+        "country":  "France",
+        "field":  "Bacteriology",
+        "calculus_number":  3,
+        "calculus_name":  "Third",
+        "portrait_url":  null
+    },
+    {
+        "name":  "Camille Guérin",
+        "birth_year":  1872,
+        "death_year":  1961,
+        "lifespan_raw":  "1872 - 1961",
+        "country":  "France",
+        "field":  "Bacteriology",
+        "calculus_number":  4,
+        "calculus_name":  "Fourth",
+        "portrait_url":  null
+    },
+    {
+        "name":  "Carl Naeslund",
+        "birth_year":  1892,
+        "death_year":  1946,
+        "lifespan_raw":  "1892 - 1946",
+        "country":  "Sweden",
+        "field":  "Bacteriology",
+        "calculus_number":  4,
+        "calculus_name":  "Fourth",
+        "portrait_url":  null
+    },
+    {
+        "name":  "Peter Aaby",
+        "birth_year":  1944,
+        "death_year":  2026,
+        "lifespan_raw":  "1944 - Present",
+        "country":  "Denmark",
+        "field":  "Epidemiology",
+        "calculus_number":  5,
+        "calculus_name":  "Fifth",
+        "portrait_url":  null
+    },
+    {
+        "name":  "Denise Faustman",
+        "birth_year":  1955,
+        "death_year":  2026,
+        "lifespan_raw":  "1955 - Present",
+        "country":  "United States",
+        "field":  "Immunology",
+        "calculus_number":  5,
+        "calculus_name":  "Fifth",
+        "portrait_url":  null,
+        "date_note":  "[ESTIMATED] Birth year approximate; living researcher"
+    },
+    {
+        "name":  "Christine Stabell Benn",
+        "birth_year":  1970,
+        "death_year":  2026,
+        "lifespan_raw":  "1970 - Present",
+        "country":  "Denmark",
+        "field":  "Immunology",
+        "calculus_number":  5,
+        "calculus_name":  "Fifth",
+        "portrait_url":  null,
+        "date_note":  "[ESTIMATED] Birth year approximate; living researcher"
+    },
+    {
+        "name":  "Mihai Netea",
+        "birth_year":  1972,
+        "death_year":  2026,
+        "lifespan_raw":  "1972 - Present",
+        "country":  "Romania",
+        "field":  "Immunology",
+        "calculus_number":  5,
+        "calculus_name":  "Fifth",
+        "portrait_url":  null,
+        "date_note":  "[ESTIMATED] Birth year approximate; living researcher"
+    },
+    {
+        "name":  "Erhard Weigel",
+        "birth_year":  1625,
+        "death_year":  1699,
+        "lifespan_raw":  "1625 - 1699",
+        "country":  "Germany",
+        "field":  "Mathematics/Astronomy",
+        "calculus_number":  1,
+        "calculus_name":  "First",
         "portrait_url":  null
     }
 ]

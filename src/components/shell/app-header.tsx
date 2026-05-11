@@ -2,6 +2,7 @@ import { motion } from "motion/react";
 import { AdminModeToggle } from "@/components/admin/admin-mode-toggle";
 import { useHistoricalRuntime } from "@/historical/runtime-context";
 import { ViewNavigation } from "./view-navigation";
+import angelBanner from "@/assets/angel banner.png";
 
 
 export function AppHeader() {
@@ -41,6 +42,7 @@ export function AppHeader() {
         <AdminModeToggle />
         <ViewNavigation />
       </div>
+      <img className="app-header__angel-banner" src={angelBanner} alt="" aria-hidden="true" />
     </motion.header>
   );
 }
