@@ -22,7 +22,7 @@ export function AppHeader() {
             alt="Geist Quest"
           />
           <div>
-            <h1>Geist Quest Presents: The&nbsp;Sacred&nbsp;Timeline</h1>
+            <h1><span className="app-header__brand-name">Geist Quest</span> Presents: The&nbsp;Sacred&nbsp;Timeline</h1>
           </div>
         </div>
         <p className="app-header__subtitle">History of science and religion as one coordinated knowledge space.</p>
